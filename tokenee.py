@@ -107,7 +107,7 @@ class Tokenizer:
     
     def transform(self,tokens):
         if self.vocab:
-            return [self.vocab.stoi[token] if token in self.vocab.stoi else self.stoi[self.vocab.unk_token] for token in tokens]
+            return [self.vocab.stoi[token] if token in self.vocab.stoi else self.vocab.stoi[self.vocab.unk_token] for token in tokens]
     
     def inverse_transform(self,indices):
         if self.vocab:
