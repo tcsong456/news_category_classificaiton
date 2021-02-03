@@ -19,5 +19,7 @@ variables:
     value: 0
   - name: MIN_NODES_SCORING
     value: 0
-  - name: train_ratio
+  - name: TRAIN_RATIO
     value: 0.7
+  - name: MODEL_MODE
+    value: skipgram

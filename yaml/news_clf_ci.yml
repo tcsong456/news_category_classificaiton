@@ -40,6 +40,14 @@ stages:
           wc -l corpus.txt
           head -n 5 corpus.txt
           python py/preprocessing.py --corpus corpus.txt > corpus_clean.txt
-          python py/train_test_split.py --corpus corpus_clean.txt --train_ratio $(train_ratio)
+          python py/train_test_split.py --corpus corpus_clean.txt --train_ratio $(TRAIN_RATIO)
           wc -l corpus_train.txt corpus_eval.txt
           awk -F '\t' '{print tolower($2)}' corpus_train.txt > corpus_train_text.txt
+          wc -l corpus_train_text.txt
+          python py/build_vocab.py --tokenizer 'treebank' --max_seq_len 1024 \
+          --input corpus_train_text.txt --corpus corpus_train.txt --vocab vocab_train.pkl \
+          --min_freq 3 --mode $(MODEL_MODE) --lower --pretrained_vectors
+          if [ ! -f train_text.txt ];then
+            echo 'train_text not produced'
+            exit 1
+          fi
