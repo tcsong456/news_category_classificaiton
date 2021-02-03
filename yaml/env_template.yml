@@ -1,4 +1,4 @@
-Variables:
+variables:
   - name: CPU_VM_SIZE_SCORING
     value: STANDARD_DS2_V2
   - name: CPU_VM_SIZE
