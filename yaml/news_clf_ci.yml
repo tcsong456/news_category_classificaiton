@@ -34,6 +34,12 @@ stages:
 #        azurePowerShellVersion: latestVersion
         inlineScript: |
           set -e
-          bash create_corpus.sh
+          echo 'creating corpus'
+          if [ ! -f 'News_Category_Dataset_v2.json' ];then
+            echo 'manully download the data and unzip it first!'
+          fi
+          News_Category_Dataset_v2.json > corpus.txt
+          wc -l corpus.txt
+          head -n 5 corpus.txt
+          python py/build_corpus.py --corpus corpus.txt
           python py/preprocessing.py --corpus corpus.txt > corpus_clean.txt
-          bash split.sh
