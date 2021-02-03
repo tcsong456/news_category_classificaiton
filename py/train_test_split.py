@@ -15,7 +15,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--train_ratio',type=float,default=0.7,
                         help='ratio of training samples')
-    parser.add_argument('--corpous',type=str,
+    parser.add_argument('--corpus',type=str,
                         help='the corpus to be splitted')
     args = parser.parse_args()
     train_ratio = args.train_ratio
