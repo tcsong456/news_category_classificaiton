@@ -1,15 +1,12 @@
 import argparse
 import numpy as np
 import pandas as pd
-import sys
 
-def write_stdout(df):
-    for _,(cat,desc) in df.iterrows():
-        line = f'{cat}\t{desc}'
-        try:
-            sys.stdout.write(line+'\n')
-        except UnicodeEncodeError:
-            pass
+def write_file(file,df):
+    with open(file,'a') as f:
+        for _,(cat,desc) in df.iterrows():
+            line = f'{cat}\t{desc}'
+            f.write(line+'\n')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -37,8 +34,7 @@ if __name__ == '__main__':
         train = rand_corpus.iloc[:n_train]
         eval = rand_corpus.iloc[n_train:]
         
-        write_stdout(train)
-        write_stdout(eval)
+        write_file('corpus_train.txt',train)
+        write_file('corpus_eval.txt',eval)
 
-#%%
-    
+
