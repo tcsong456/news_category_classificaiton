@@ -40,7 +40,4 @@ stages:
           wc -l corpus.txt
           head -n 5 corpus.txt
           python py/preprocessing.py --corpus corpus.txt > corpus_clean.txt
-          train_ratio=$(train_ratio)
-          eval_ratio=$(eval_ratio)
-          total=$(echo $train_ratio+$eval_ratio | bc)
-          echo $total
+          python py/train_test_split.py --corpus corpus_clean.txt > corpus_train.txt corpus_eval.txt --train_ratio $(train_ratio)
