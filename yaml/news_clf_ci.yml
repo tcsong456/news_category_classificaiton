@@ -32,10 +32,7 @@ stages:
         workingDirectory: $(Build.SourcesDirectory)
         inlineScript: |
           set -e
-          unzip News_Category_Dataset_v2.json.zip
-          python py/build_corpus --corpus News_Category_Dataset_v2.json > corpus.txt
-          wc -l corpus.txt
-          head -n 5 corpus.txt
+          bash create_corpus.sh
           bash split.sh 0.7 0.3
           python py/preprocessing.py --corpus corpus.txt > corpus_clean.txt
           head -n 5 corpus_clean.txt

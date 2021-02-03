@@ -4,16 +4,18 @@ import json
 from env_variables import ENV
 
 def main():
+    env = ENV()
     with open('config.json','r') as f:
         config = json.load(f)        
     auth = ServicePrincipalAuthentication(tenant_id=config['tenant_id'],
                                           service_principal_id=config['service_principal_id'],
                                           service_principal_password=config['service_principal_password'])
     
-    ws = use_or_create_workspace(workspace=config['workspace'],
-                                 resource_group=config['resource_group'],
+    ws = use_or_create_workspace(workspace=ENV.workspace,
+                                 resource_group=env.resource_group,
                                  subscription_id=env.subscription_id,
                                  auth=auth) 
+    
     
     
     
