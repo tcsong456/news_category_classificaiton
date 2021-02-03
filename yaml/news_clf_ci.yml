@@ -41,6 +41,6 @@ stages:
           head -n 5 corpus.txt
           python py/preprocessing.py --corpus corpus.txt > corpus_clean.txt
           train_ratio=$(train_ratio)
-          eval_ratio=$(eval_raito)
+          eval_ratio=$(eval_ratio)
           total=$(echo $train_ratio+$eval_ratio | bc)
           echo $total
