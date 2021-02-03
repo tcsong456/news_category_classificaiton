@@ -42,3 +42,8 @@ stages:
           python py/preprocessing.py --corpus corpus.txt > corpus_clean.txt
           python py/train_test_split.py --corpus corpus_clean.txt --train_ratio $(train_ratio)
           wc -l corpus_train.txt corpus_eval.txt
+          if [ ! -d 'fastText' ];then
+            git clone https://github.com/facebookresearch/fastText.git
+            cd  fastText
+            pip install.
+            cd..
