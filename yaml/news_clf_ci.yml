@@ -25,12 +25,15 @@ stages:
     container: mlops
     timeoutInMinutes: 0
     steps:
-    - task: AzureCLI@1
+    - task: AzurePowerShell@1
       inputs:
         azureSubscription: '$(WORKSPACE_SVC_CONNECTION)'
-        scriptLocation: inlineScript
-        workingDirectory: $(Build.SourcesDirectory)
+#        scriptLocation: inlineScript
+#        workingDirectory: $(Build.SourcesDirectory)
+        scriptType: inlineScript
+        azurePowerShellVersion: latestVersion
         inlineScript: |
           set -e
           bash create_corpus.sh
           python py/preprocessing.py --corpus corpus.txt > corpus_clean.txt
+          bash split.sh
