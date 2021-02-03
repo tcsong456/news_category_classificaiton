@@ -47,3 +47,4 @@ stages:
             cd  fastText
             pip install.
             cd..
+          fi
