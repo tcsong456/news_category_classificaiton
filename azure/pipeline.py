@@ -11,7 +11,7 @@ def main():
                                           service_principal_id=config['service_principal_id'],
                                           service_principal_password=config['service_principal_password'])
     
-    ws = use_or_create_workspace(workspace=ENV.workspace,
+    ws = use_or_create_workspace(workspace=env.workspace,
                                  resource_group=env.resource_group,
                                  subscription_id=env.subscription_id,
                                  auth=auth) 

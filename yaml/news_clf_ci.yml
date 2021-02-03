@@ -33,6 +33,4 @@ stages:
         inlineScript: |
           set -e
           bash create_corpus.sh
-          bash split.sh 0.7 0.3
           python py/preprocessing.py --corpus corpus.txt > corpus_clean.txt
-          head -n 5 corpus_clean.txt
