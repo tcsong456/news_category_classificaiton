@@ -1,0 +1,41 @@
+resources:
+  containers:
+  - container: mlops
+    image: andysong199086/news_clf:1.0
+
+pr: none
+trigger:
+  branches:
+    include:
+    - main
+
+variables:
+  - template: env_template.yml
+  - group: devops-vg
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+- stage: 'Model_CI'
+  displayName: 'Model CI'
+  jobs:
+  - job: 'create_corpus'
+    displayName: 'Creating Corpus'
+    container: mlops
+    timeoutInMinutes: 0
+    steps:
+    - task: AzureCLI@1
+      inputs:
+        azureSubscription: $(WORKSPACE_SVC_CONNECTION)
+        scriptLocation: inlineScript
+        workingDirectory: $(Build.SourcesDirectory)
+        inlineScript: |
+          set -e
+          unzip News_Category_Dataset_v2.json.zip
+          python py/build_corpus --corpus News_Category_Dataset_v2.json > corpus.txt
+          wc -l corpus.txt
+          head -n 5 corpus.txt
+          bash split.sh 0.7 0.3
+          python py/preprocessing.py --corpus corpus.txt > corpus_clean.txt
+          head -n 5 corpus_clean.txt
