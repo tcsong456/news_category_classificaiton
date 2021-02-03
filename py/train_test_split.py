@@ -21,7 +21,7 @@ if __name__ == '__main__':
     else:
         eval_ratio = 1.0 - train_ratio
         category,description = [],[]
-        with open('corpus/corpus_clean.txt','r') as f:
+        with open(args.corpus,'r') as f:
             for line in f:
                 _line = line.split('\t')
                 cat,desc = _line[0].strip(),' '.join(_line[1:]).strip()
