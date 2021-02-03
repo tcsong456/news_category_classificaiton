@@ -30,8 +30,6 @@ stages:
         azureSubscription: '$(WORKSPACE_SVC_CONNECTION)'
         scriptLocation: inlineScript
         workingDirectory: $(Build.SourcesDirectory)
-#        scriptType: inlineScript
-#        azurePowerShellVersion: latestVersion
         inlineScript: |
           set -e
           echo 'creating corpus'
@@ -42,3 +40,7 @@ stages:
           wc -l corpus.txt
           head -n 5 corpus.txt
           python py/preprocessing.py --corpus corpus.txt > corpus_clean.txt
+          train_ratio=$(train_ratio)
+          eval_ratio=$(eval_raito)
+          total=$(echo $train_ratio+$eval_ratio | bc)
+          echo $total
