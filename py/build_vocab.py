@@ -84,7 +84,7 @@ if __name__ == '__main__':
     vocab.build()
 
     if args.pretrained_vectors:
-        output = os.path.join('corpus',args.mode + '_vec.txt')
+        output = args.mode + '_vec.txt'
         fasttext_vec(args.input,output,args.mode)
         pretrained_vectors = load_pretrained(output)
         vocab.from_pretrained(pretrained_vectors)
