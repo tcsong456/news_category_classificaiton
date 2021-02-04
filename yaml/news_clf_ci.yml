@@ -44,6 +44,13 @@ stages:
           wc -l corpus_train.txt corpus_eval.txt
           awk -F '\t' '{print tolower($2)}' corpus_train.txt > corpus_train_text.txt
           wc -l corpus_train_text.txt
+          if [ ! -f 'fastText' ];then
+            echo 'clone repo from https://github.com/facebookresearch/fastText first'
+            exit 1
+          fi
+          cd fastText
+          pip install .
+          cd ..
           python py/build_vocab.py --tokenizer 'treebank' --max_seq_len 1024 \
           --input corpus_train_text.txt --corpus corpus_train.txt --vocab vocab_train.pkl \
           --min_freq 3 --mode $(MODEL_MODE) --lower --pretrained_vectors
