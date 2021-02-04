@@ -18,6 +18,5 @@ else
     cat corpus_clean.txt | shuf > corput_shuf.txt
     head -n $train_lines corpus_shuf.txt > corpus_train.txt
     tail -n $valid_lines corpus_shuf.txt > corpus_valid.txt
-    wc -l corpus_train.txt corpus_valid.txt
   fi
 fi
