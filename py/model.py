@@ -14,7 +14,7 @@ class CBOWClassifier(nn.Module):
         self.embedding = nn.Embedding(input_size,embedding_size)
         if embedding_weight is not None:
             self.embedding.weight.data.copy_(torch.from_numpy(embedding_weight))
-        if not embedding_trainable:
+        if not embedding_trainable == 'true':
             self.embedding.weight.requires_grad = False
         self.fc1 = nn.Linear(embedding_size,hidden_size)
         self.relu = nn.ReLU()
@@ -47,7 +47,7 @@ class LSTMClassifier(nn.Module):
         self.embedding = nn.Embedding(input_size,embedding_size)
         if embedding_weight is not None:
             self.embedding.weight.data.copy_(torch.from_numpy(embedding_weight))
-        if not embedding_trainable:
+        if not embedding_trainable == 'true':
             self.embedding.weight.requires_grad = False
         self.lstm = nn.LSTM(input_size=embedding_size,
                             hidden_size=hidden_size,

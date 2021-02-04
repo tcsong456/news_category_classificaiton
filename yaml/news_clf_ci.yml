@@ -26,6 +26,8 @@ stages:
     timeoutInMinutes: 0
     steps:
     - task: AzureCLI@1
+      displayName: 'building corpus'
+      name: 'getcorpus'
       inputs:
         azureSubscription: '$(WORKSPACE_SVC_CONNECTION)'
         scriptLocation: inlineScript
@@ -62,4 +64,24 @@ stages:
           echo '##vso[task.setvariable variable=train_data;isOutput=true]$train_data'
           echo '##vso[task.setvariable variable=eval_data;isOutput=true]$eval_data'
           echo '##vso[task.setvariable variable=vocab;isOutput=true]$vocab'
+  - job:
+    dependsOn: 'create_corpus'
+    displayName: 'Build pipeline'
+    container: mlops
+    variables:
+      TRAIN_DATA: $[ dependencies.create_corpus.outputs['getcorpus.train_data'] ]
+      EVAL_DATA: $[ dependencies.create_corpus.outputs['getcorpus.eval_data'] ]
+      VOCAB: $[ dependencies.create_corpus.outputs['getcorpus.vocab'] ]
+    timeoutInMinutes: 0
+    steps:
+    - task: AzureCLI@1
+      inputs:
+        azureSubscription: '$(WORKSPACE_SVC_CONNECTION)'
+        scriptLocation: inlineScript
+        workingDirectory: $(Build.SourcesDirectory)
+        inlineScript: |
+          set -e
+          export SUSCRIPTION_ID=$(az account show --query id -o tsv)
+          python py/pipeline.py
+        
           

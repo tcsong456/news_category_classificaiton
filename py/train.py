@@ -20,7 +20,7 @@ MODE = ('lstm','cbow')
 def parseargs():
     parser = argparse.ArgumentParser()
     arg = parser.add_argument
-    arg('--cuda',action='store_true',
+    arg('--cuda',type=str,defautl='true',
         help='wether to use gpu or not')
     arg('--batch_size_train',type=int,default=8,
         help='batch size used for training')
@@ -31,7 +31,7 @@ def parseargs():
         help='the tokenizer to use')
     arg('--vocab',type=str,
         help='the vocabulary to be used')
-    arg('--is_sentence',action='store_true',
+    arg('--is_sentence',type=str,default='false',
         help='if the paragraph has already been transformed into sentences')
     arg('--max_seq_len',type=int,default=1024,
         help='max number of tokens allowed')
@@ -50,7 +50,7 @@ def parseargs():
         help='dropout rate')
     arg('--embedding_size',type=int,default=100,
         help='embedding dim for word vectors')
-    arg('--embedding_trainable',action='store_true',
+    arg('--embedding_trainable',type=str,default='true',
         help='whether the embedding vector is trainable')
     arg('--use_word_embedding',action='store_true',
         help='whethe to use provided word embedding')
@@ -196,7 +196,7 @@ if __name__ == '__main__':
                     loss_fn=loss_fn,
                     eval_loader=eval_loader)
     
-    torch.save(model.state_dict(),args.save_path)        
+    torch.save(model,args.save_path)        
             
             
     

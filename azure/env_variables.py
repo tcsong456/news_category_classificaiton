@@ -15,5 +15,7 @@ class ENV:
     max_nodes: Optional[int] = os.environ.get('MAX_NODES')
     min_nodes_scoring: Optional[int] = os.environ.get('MIN_NODES_SCORING')
     min_nodes: Optional[int] = os.environ.get('MIN_NODES')
+    datastore_name: Optional[str] = os.environ.get('DATASTORE_NAME')
+    pipeline_name: Optional[str] = os.environ.get('PIPELINE_NAME')
     
 #%%

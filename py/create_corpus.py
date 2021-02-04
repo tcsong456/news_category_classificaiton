@@ -29,7 +29,7 @@ class Corpus(Dataset):
         
         label = torch.tensor(label)
         text_tokens = torch.tensor(text_tokens)
-        if self.cuda:
+        if self.cuda == 'true':
             label = label.cuda()
             text_tokens = text_tokens.cuda()
         

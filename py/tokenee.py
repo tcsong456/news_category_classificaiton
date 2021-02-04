@@ -66,7 +66,7 @@ class Tokenizer:
         self.max_len = max_len
         self.vocab = vocab
     
-        if not self.is_sentence:
+        if not self.is_sentence == 'true':
             from nltk.tokenize import sent_tokenize
             self.sent_tokenize_fn = sent_tokenize
     

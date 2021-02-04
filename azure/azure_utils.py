@@ -67,7 +67,7 @@ def use_or_create_computetarget(ws,
 
 def use_or_create_environment(ws,
                               env_name,
-                              conda_dependencies,
+                              conda_dependencies=None,
                               enable_docker=False,
                               use_gpu=False,
                               create_new_env=False):
@@ -92,7 +92,6 @@ def use_or_create_environment(ws,
     return environment
 
 def use_or_create_datastore(ws,
-                            e,
                             datastore_name,
                             container_name=None,
                             account_name=None,
