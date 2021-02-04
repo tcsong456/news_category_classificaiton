@@ -82,6 +82,6 @@ stages:
         inlineScript: |
           set -e
           export SUSCRIPTION_ID=$(az account show --query id -o tsv)
-          python py/pipeline.py
+          python azure/pipeline.py
         
           
