@@ -33,9 +33,11 @@ stages:
         inlineScript: |
           set -e
           echo 'creating corpus'
-          if [ ! -f 'News_Category_Dataset_v2.json' ];then
+          if [ ! -f 'News_Category_Dataset_v2.json.zip' ];then
             echo 'manully download the data and unzip it first!'
           fi
+          unzip News_Category_Dataset_v2.json.zip
+          rm News_Category_Dataset_v2.json.zip
           python py/build_corpus.py --corpus News_Category_Dataset_v2.json > corpus.txt
           wc -l corpus.txt
           head -n 5 corpus.txt
@@ -54,3 +56,10 @@ stages:
           else
             echo 'both vec file and vocab_train.pkl found'
           fi
+          train_data='$(cat corpus_train.txt)'
+          eval_data='$(cat corpus_eval.txt)'
+          vocab='$(voab_train.pkl)'
+          echo '##vso[task.setvariable variable=train_data;isOutput=true]$train_data'
+          echo '##vso[task.setvariable variable=eval_data;isOutput=true]$eval_data'
+          echo '##vso[task.setvariable variable=vocab;isOutput=true]$vocab'
+          

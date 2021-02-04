@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y \
         wget \
         git \
         unzip \
+        bc \
         && rm -rf /var/cache/apk/* \
         && git clone https://github.com/facebookresearch/fastText.git && \
         cd fastText && pip install . && cd ..
