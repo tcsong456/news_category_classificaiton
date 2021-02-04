@@ -1,7 +1,7 @@
 resources:
   containers:
   - container: mlops
-    image: andysong199086/news_clf:1.0
+    image: andysong199086/news_clf:2.0
 
 pr: none
 trigger:

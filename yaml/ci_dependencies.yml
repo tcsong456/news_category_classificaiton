@@ -10,3 +10,4 @@ dependencies:
     - azure-cli==2.3.*
     - numpy
     - pandas
+    - nltk

@@ -16,7 +16,8 @@ def main():
                                  subscription_id=env.subscription_id,
                                  auth=auth) 
     
-    
+    compute_target = use_or_create_computetarget(ws=ws,
+                                                 e=env,)
     
     
 
