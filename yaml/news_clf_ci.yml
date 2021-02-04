@@ -1,7 +1,7 @@
 resources:
   containers:
   - container: mlops
-    image: andysong199086/news_clf:2.0
+    image: andysong199086/news_clf:3.0
 
 pr: none
 trigger:
@@ -44,18 +44,17 @@ stages:
           wc -l corpus_train.txt corpus_eval.txt
           awk -F '\t' '{print tolower($2)}' corpus_train.txt > corpus_train_text.txt
           wc -l corpus_train_text.txt
-          if [ ! -d 'ft' ];then
-            echo 'clone repo from https://github.com/facebookresearch/fastText first'
-            exit 1
-          fi
-          cd ft
-          pip install --user .
-          cd ..
+#          if [ ! -d 'fastText' ];then
+#            git clone https://github.com/facebookresearch/fastText.git
+#            cd fastText
+#            pip install .
+#            cd ..
+#          fi
           python py/build_vocab.py --tokenizer 'treebank' --max_seq_len 1024 \
           --input corpus_train_text.txt --corpus corpus_train.txt --vocab vocab_train.pkl \
           --min_freq 3 --mode $(MODEL_MODE) --lower --pretrained_vectors
           vec_file=$(MODEL_MODE)'_vec.txt'
-          if [ ! -f vec_file ];then
+          if [ ! -f vec_file ] or [ ! -f vocab_train.pkl ];then
             echo 'vec file not produced'
             exit 1
           else
