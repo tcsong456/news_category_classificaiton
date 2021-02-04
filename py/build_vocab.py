@@ -32,12 +32,11 @@ def load_pretrained(file):
     with open(file,'r',encoding='-utf-8') as f:
         for line in f:
             tokens = line.rstrip().split()
-            print(tokens)
             try:
                 word,vector = tokens[0],list(map(float,tokens[1:]))
                 word_vec[word] = vector
-            except UnicodeEncodeError:
-                pass
+            except Exception as e:
+                print(e)
         print(f'{len(word_vec)} number of vectors loaded')
     
     return word_vec
