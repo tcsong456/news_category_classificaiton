@@ -2,6 +2,8 @@ import argparse
 import pickle
 import os
 from tokenee import Tokenizer,Vocab
+import nltk
+nltk.download('punkt')
 
 TOKENIZER = ('treebank','mecab')
 
