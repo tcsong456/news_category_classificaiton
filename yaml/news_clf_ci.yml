@@ -49,7 +49,7 @@ stages:
             exit 1
           fi
           cd ft
-          pip install .
+          pip install --user .
           cd ..
           python py/build_vocab.py --tokenizer 'treebank' --max_seq_len 1024 \
           --input corpus_train_text.txt --corpus corpus_train.txt --vocab vocab_train.pkl \
