@@ -44,19 +44,13 @@ stages:
           wc -l corpus_train.txt corpus_eval.txt
           awk -F '\t' '{print tolower($2)}' corpus_train.txt > corpus_train_text.txt
           wc -l corpus_train_text.txt
-#          if [ ! -d 'fastText' ];then
-#            git clone https://github.com/facebookresearch/fastText.git
-#            cd fastText
-#            pip install .
-#            cd ..
-#          fi
           python py/build_vocab.py --tokenizer 'treebank' --max_seq_len 1024 \
           --input corpus_train_text.txt --corpus corpus_train.txt --vocab vocab_train.pkl \
-#          --min_freq 3 --mode $(MODEL_MODE) --lower --pretrained_vectors
-#          vec_file=$(MODEL_MODE)'_vec.txt'
-#          if [ ! -f $vec_file ] or [ ! -f 'vocab_train.pkl' ];then
-#            echo 'vec file or vocab_train.pkl not produced'
-#            exit 1
-#          else
-#            echo 'both vec file and vocab_train.pkl found'
-#          fi
+          --min_freq 3 --mode $(MODEL_MODE) --lower --pretrained_vectors
+          vec_file=$(MODEL_MODE)'_vec.txt'
+          if [ ! -f $vec_file ] or [ ! -f 'vocab_train.pkl' ];then
+            echo 'vec file or vocab_train.pkl not produced'
+            exit 1
+          else
+            echo 'both vec file and vocab_train.pkl found'
+          fi
