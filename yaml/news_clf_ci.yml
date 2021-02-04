@@ -54,9 +54,9 @@ stages:
           --input corpus_train_text.txt --corpus corpus_train.txt --vocab vocab_train.pkl \
           --min_freq 3 --mode $(MODEL_MODE) --lower --pretrained_vectors
           vec_file=$(MODEL_MODE)'_vec.txt'
-          if [ ! -f $vec_file ] or [ ! -f 'vocab_train.pkl' ];then
-            echo 'vec file or vocab_train.pkl not produced'
-            exit 1
-          else
-            echo 'both vec file and vocab_train.pkl found'
-          fi
+#          if [ ! -f $vec_file ] or [ ! -f 'vocab_train.pkl' ];then
+#            echo 'vec file or vocab_train.pkl not produced'
+#            exit 1
+#          else
+#            echo 'both vec file and vocab_train.pkl found'
+#          fi
