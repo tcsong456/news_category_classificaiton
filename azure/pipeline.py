@@ -103,7 +103,7 @@ def main():
     
     register_step = PythonScriptStep(name='register_step',
                                      source_directory='.',
-                                     script_name='py/register.py',
+                                     script_name='azure/register.py',
                                      arguments=['--model_name',model_name_param,
                                                 '--input',output],
                                      inputs=[output],
