@@ -88,7 +88,7 @@ def main():
                                           vocab_param],
                                   outputs=[output],
                                   compute_target=gpu_compute_target,
-                                  run_config=runconfig,
+                                  runconfig=runconfig,
                                   allow_reuse=True
                                     )
     print('train_step built')
