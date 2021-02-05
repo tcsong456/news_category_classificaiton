@@ -46,6 +46,7 @@ def main():
                                             env_name='pytorch-gpu-env')
     
     model_name_param = PipelineParameter('model_name',default_value='news_clf_model.pt')
+    model_version_param = PipelineParameter('model_version',default_value='0')
     cuda_param = PipelineParameter('cuda',default_value='true')
     batch_train_param = PipelineParameter('batch_train',default_value=32)
     batch_eval_param = PipelineParameter('batch_eval',default_value=32) 
@@ -64,6 +65,7 @@ def main():
     use_word_embedding_param = PipelineParameter('use_word_embedding',default_value=True)
     learning_rate_param = PipelineParameter('learning_rate',default_value=0.01)
     epochs_param = PipelineParameter('epochs',default_value=50)
+    batchscore_dataset_param = PipelineParameter('batchscore_dataset',default_value='batchscore_dataset.csv')
     output = PipelineData('output',datastore=datastore)
     
     runconfig = RunConfiguration()
@@ -113,8 +115,22 @@ def main():
     print('register_step built')
     register_step.run_after(train_step)
     
+    batchscore_step = PythonScriptStep(name='batchscore_step',
+                                       script_name='azure/batch_score.py',
+                                       source_directory='.',
+                                       arguments=['--model_name',model_name_param,
+                                                  '--model_version',model_version_param,
+                                                  '--dataset',batchscore_dataset_param,
+                                                  '--cuda',cuda_param,
+                                                  '--batch_size',batch_eval_param],
+                                       compute_target=gpu_compute_target,
+                                       runconfig=runconfig,
+                                       allow_reuse=False)
+    print('batchscore_step built')
+    batchscore_step.run_after(register_step)
+    
     pipeline = Pipeline(workspace=ws,
-                        steps=[train_step,register_step])
+                        steps=[train_step,register_step,batchscore_step])
     pipeline.publish(name=env.pipeline_name,
                      version=env.build_id)
     
