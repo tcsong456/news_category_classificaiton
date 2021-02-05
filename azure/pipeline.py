@@ -22,12 +22,12 @@ def main():
     cpu_compute_target = use_or_create_computetarget(ws=ws,
                                                      e=env,
                                                      cpu_cluster=True,
-                                                     compute_name='score_cluster',
+                                                     compute_name='score-cluster',
                                                      )
     gpu_compute_target = use_or_create_computetarget(ws=ws,
                                                      e=env,
                                                      cpu_cluster=False,
-                                                     compute_name='gpu_cluster')
+                                                     compute_name='gpu-cluster')
     datastore = use_or_create_datastore(ws=ws,
                                         datastore_name=env.datastore_name,
                                         container_name='news_clf',
