@@ -5,6 +5,8 @@ from typing import Optional
 @dataclass
 class ENV:
     subscription_id: Optional[str] = os.environ.get('SUBSCRIPTION_ID')
+    workspace: Optional[str] = os.environ.get('WORKSPACE')
+    resource_group: Optional[str] = os.environ.get('RESOURCE_GROUP')
     cpu_vm_size_scoring: Optional[str] = os.environ.get('CPU_VM_SIZE_SCORING')
     cpu_vm_size: Optional[str] = os.environ.get('CPU_VM_SIZE')
     gpu_vm_size_scoring: Optional[str] = os.environ.get('GPU_VM_SIZE_SCORING')
