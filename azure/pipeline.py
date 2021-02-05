@@ -63,6 +63,7 @@ def main():
     
     train_step = PythonScriptStep(name='train_step',
                                   source_directory='.',
+                                  script_name='py/train.py',
                                   arguments=[
                                              '--cuda',cuda_param,
                                              '--batch_size_train',batch_train_param,
