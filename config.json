@@ -2,5 +2,7 @@
  "service_principal_id":"de6944f7-6f0c-4c66-9e41-ce53650629d6",
  "service_principal_password":"S0eGD_d~65n.hsUmm~scgS.ctp~F3m82ey",
  "account_name":"diabetesamlsa",
- "account_key":"owh8UCpsBmVxpo1KFDPlUuWqYPVZjob0G67cJwSXtqDdjK2oZaZAKL3KwFrJC/7jFNPaRn+4Ua0ATkrZFSo5dg=="
+ "account_key":"owh8UCpsBmVxpo1KFDPlUuWqYPVZjob0G67cJwSXtqDdjK2oZaZAKL3KwFrJC/7jFNPaRn+4Ua0ATkrZFSo5dg==",
+ "registration":{"tags":["learning_rate","bidirectional","use_word_embedding","embedding_trainable", \
+                         "dropout","num_layers","hidden_size","mode","eval_avg_acc"]}
  }

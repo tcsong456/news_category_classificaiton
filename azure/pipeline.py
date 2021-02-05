@@ -45,6 +45,7 @@ def main():
     environment = use_or_create_environment(ws=ws,
                                             env_name='pytorch-gpu-env')
     
+    model_name_param = PipelineParameter('model_name',default='news_clf_model.pt')
     cuda_param = PipelineParameter('cuda',default_value='true')
     batch_train_param = PipelineParameter('batch_train',default_value=32)
     batch_eval_param = PipelineParameter('batch_eval',default_value=32) 
@@ -72,6 +73,7 @@ def main():
                                   source_directory='.',
                                   script_name='py/train.py',
                                   arguments=[
+                                             '--model_name',model_name_param,
                                              '--cuda',cuda_param,
                                              '--batch_size_train',batch_train_param,
                                              '--batch_size_eval',batch_eval_param,
@@ -89,7 +91,8 @@ def main():
                                              '--embedding_trainable',embedding_trainable_param,
                                              '--use_word_embedding',use_word_embedding_param,
                                              '--learning_rate',learning_rate_param,
-                                             '--epochs',epochs_param
+                                             '--epochs',epochs_param,
+                                             '--save_path',output
                                              ],
                                   outputs=[output],
                                   compute_target=gpu_compute_target,
@@ -98,23 +101,23 @@ def main():
                                     )
     print('train_step built')
     
+    register_step = PythonScriptStep(name='register_step',
+                                     source_directory='.',
+                                     script_name='py/register.py',
+                                     arguments=['--model_name',model_name_param,
+                                                '--input',output],
+                                     inputs=[output],
+                                     compute_target=cpu_compute_target,
+                                     runconfig=runconfig,
+                                     allow_reuse=False)
+    print('register_step built')
+    register_step.run_after(train_step)
+    
     pipeline = Pipeline(workspace=ws,
-                        steps=[train_step])
+                        steps=[train_step,register_step])
     pipeline.publish(name=env.pipeline_name,
                      version=env.build_id)
     
 
 if __name__ == '__main__':
     main()
-
-#%%
-#from azureml.core import Workspace,Datastore,Dataset
-#ws = Workspace.get(name='aml-workspace',
-#                   resource_group='aml-resource-group',
-#                   subscription_id='64c727c2-4f98-4ef1-a45f-09eb33c1bd59')
-#datastores = ws.datastores
-#datastore = datastores['news_cat_clf']
-#datastore.upload_files(['corpus/corpus_train.txt'],
-#                       target_path='corpus',
-#                       overwrite=True)
-#dataset = Dataset.Tabular.from_delimited_files(path=(datastore,'corpus/corpus_train.txt'))

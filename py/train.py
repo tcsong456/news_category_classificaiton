@@ -11,8 +11,10 @@ from create_corpus import Corpus
 from model import CBOWClassifier,LSTMClassifier
 import logzero
 import logging
+import os
 import warnings
 warnings.filterwarnings('ignore')
+from azureml.core.run import Run
 
 TOKENIZER = ('treebank','mecab')
 MODE = ('lstm','cbow')
@@ -20,7 +22,9 @@ MODE = ('lstm','cbow')
 def parseargs():
     parser = argparse.ArgumentParser()
     arg = parser.add_argument
-    arg('--cuda',type=str,defautl='true',
+    arg('--model_name',type=str,default='news_clf_model.pt',
+        help='the name of the model')
+    arg('--cuda',type=str,default='true',
         help='wether to use gpu or not')
     arg('--batch_size_train',type=int,default=8,
         help='batch size used for training')
@@ -71,7 +75,8 @@ def costume_logger(name):
                                   formatter=formatter,
                                   level=logging.INFO)
     return logger
-
+ 
+run = Run.get_context()
 def single_train(args,
                  epoch,
                  model,
@@ -97,6 +102,8 @@ def single_train(args,
     
     avg_acc = total_acc / n_samples
     avg_loss = total_losses / rounds 
+    run.log('train_avg_acc',np.round(avg_acc,3))
+    run.parent.log('train_avg_acc',np.round(avg_acc,3))
     logger.info(f'train: epoch:{epoch},avg loss:{avg_loss:.5f},avg acc:{avg_acc:.3f}')
 
 def single_eval(args,
@@ -120,11 +127,18 @@ def single_eval(args,
             
         avg_loss = total_losses / rounds
         avg_acc = total_acc / n_samples
+        run.log('eval_avg_acc',np.round(avg_acc,3))
+        run.parent.log('eval_avg_acc',np.round(avg_acc,3))
         logger.info(f'eval: epoch:{epoch},avg loss:{avg_loss:.5f},avg acc:{avg_acc:.3f}')
 
 if __name__ == '__main__':
     logger = costume_logger('news_clf')
     args = parseargs()
+    args_dict = vars(args)
+    for key,value in args_dict:
+        run.log(key,value)
+        run.parent.log(key,value)
+        
     args.tokenizer = args.tokenizer.lower()
     if args.tokenizer == TOKENIZER[0]:
         from nltk.tokenize import word_tokenize
@@ -196,9 +210,8 @@ if __name__ == '__main__':
                     loss_fn=loss_fn,
                     eval_loader=eval_loader)
     
-    torch.save(model,args.save_path)        
+    torch.save(model,os.path.join(args.save_path,args.model_name))        
             
             
     
     #%%
-
