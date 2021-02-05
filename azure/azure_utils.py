@@ -57,7 +57,7 @@ def use_or_create_computetarget(ws,
         config = AmlCompute.provisioning_configuration(vm_size=vm_size,
                                                        vm_priority=e.vm_priority_scoring if batch_scoring else e.vm_priority_scoring,
                                                        max_nodes=e.max_nodes_scoring if batch_scoring else e.max_nodes,
-                                                       min_nodes=e.min_nodex_scoring if batch_scoring else e.min_nodex)
+                                                       min_nodes=e.min_nodes_scoring if batch_scoring else e.min_nodes)
         compute_target = ComputeTarget.create(workspace=ws,
                                               name=compute_name,
                                               provisioning_configuration=config)
