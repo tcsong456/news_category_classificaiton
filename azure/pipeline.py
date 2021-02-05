@@ -40,7 +40,7 @@ def main():
     
     cuda_param = PipelineParameter('cuda',default_value='true')
     batch_train_param = PipelineParameter('batch_train',default_value=32)
-    batch_eval_param = PipelineParameter('batch-eval',default_value=32)
+    batch_eval_param = PipelineParameter('batch_eval',default_value=32)
     tokenizer_param = PipelineParameter('tokenizer',default_value='treebank')
     vocab_param = PipelineParameter('vocab',default_value='vocab')
     is_sentence_param = PipelineParameter('is_sentence',default_value='false')
@@ -91,6 +91,7 @@ def main():
                                   run_config=runconfig,
                                   allow_reuse=True
                                     )
+    print('train_step built')
     
     pipeline = Pipeline(workspace=ws,
                         steps=[train_step])
