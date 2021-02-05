@@ -30,7 +30,7 @@ def main():
                                                      compute_name='gpu-cluster')
     datastore = use_or_create_datastore(ws=ws,
                                         datastore_name=env.datastore_name,
-                                        container_name='news_clf',
+                                        container_name='news-clf',
                                         account_name=config['account_name'],
                                         account_key=config['account_key'],
                                         use_default=False)
