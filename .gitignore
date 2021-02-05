@@ -6,7 +6,6 @@ __pycache__/
 data/*
 corpus/*
 shell/*
-config.json
 
 # C extensions
 *.so
