@@ -2,9 +2,17 @@ from azure_utils import *
 from azureml.core import RunConfiguration
 from azureml.core.authentication import ServicePrincipalAuthentication
 from azureml.pipeline.steps import PythonScriptStep
+from azureml.data.datapath import DataPath,DataPathComputeBinding
 from azureml.pipeline.core import PipelineData,PipelineParameter,Pipeline
 import json
 from env_variables import ENV
+
+def data_path(datastore,path_on_datastore):
+    datapath = DataPath(datastore=datastore,
+                        path_on_datastore=path_on_datastore)
+    datapath_input = PipelineParameter('data_path',default_value=datapath)
+    input_datapath = (datapath_input,DataPathComputeBinding(mode='mount'))
+    return input_datapath
 
 def main():
     env = ENV()
@@ -36,7 +44,6 @@ def main():
                                         use_default=False)
     environment = use_or_create_environment(ws=ws,
                                             env_name='pytorch-gpu-env')
-    
     
     cuda_param = PipelineParameter('cuda',default_value='true')
     batch_train_param = PipelineParameter('batch_train',default_value=32)
@@ -84,9 +91,6 @@ def main():
                                              '--learning_rate',learning_rate_param,
                                              '--epochs',epochs_param
                                              ],
-                                  inputs=[train_corpus_param,
-                                          eval_corpus_param,
-                                          vocab_param],
                                   outputs=[output],
                                   compute_target=gpu_compute_target,
                                   runconfig=runconfig,
@@ -104,3 +108,13 @@ if __name__ == '__main__':
     main()
 
 #%%
+#from azureml.core import Workspace,Datastore,Dataset
+#ws = Workspace.get(name='aml-workspace',
+#                   resource_group='aml-resource-group',
+#                   subscription_id='64c727c2-4f98-4ef1-a45f-09eb33c1bd59')
+#datastores = ws.datastores
+#datastore = datastores['news_cat_clf']
+#datastore.upload_files(['corpus/corpus_train.txt'],
+#                       target_path='corpus',
+#                       overwrite=True)
+#dataset = Dataset.Tabular.from_delimited_files(path=(datastore,'corpus/corpus_train.txt'))
