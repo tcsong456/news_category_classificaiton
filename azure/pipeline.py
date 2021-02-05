@@ -45,7 +45,7 @@ def main():
     environment = use_or_create_environment(ws=ws,
                                             env_name='pytorch-gpu-env')
     
-    model_name_param = PipelineParameter('model_name',default='news_clf_model.pt')
+    model_name_param = PipelineParameter('model_name',default_value='news_clf_model.pt')
     cuda_param = PipelineParameter('cuda',default_value='true')
     batch_train_param = PipelineParameter('batch_train',default_value=32)
     batch_eval_param = PipelineParameter('batch_eval',default_value=32) 
