@@ -43,7 +43,7 @@ def main():
     matched_pipe = []
     pipeline_list = PublishedPipeline.list(ws)
     for pipe in pipeline_list:
-        if pipe.name == env.pipeline_name and pipe.version.env.build_id:
+        if pipe.name == env.pipeline_name and pipe.version == env.build_id:
             matched_pipe.append(pipe)
     if len(matched_pipe) > 1:
         raise ValueError('there should be only one matched pipeline')
