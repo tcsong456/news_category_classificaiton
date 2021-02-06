@@ -26,7 +26,7 @@ def main():
                                           service_principal_id=config['service_principal_id'],
                                           service_principal_password=config['service_principal_password'])
     ws = Workspace.get(name=env.workspace,
-                       resource_grouop=env.resource_group,
+                       resource_group=env.resource_group,
                        subscription_id=env.subscription_id,
                        auth=auth)
     datastore = use_or_create_datastore(ws=ws,
