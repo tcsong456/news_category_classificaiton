@@ -15,7 +15,7 @@ def parserargs():
         help='the path to eval corpus')
     arg('--vocab',type=str,
         help='the path to vocab.pkl')
-    args = parser.parse_args
+    args = parser.parse_args()
     return args
 
 def dataframe(datapath:str,name:str):
