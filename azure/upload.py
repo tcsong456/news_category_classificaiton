@@ -46,10 +46,10 @@ def main():
     dataframe(args.corpus_eval,'corpus_eval.csv')
     
     for input in ['corpus_train.csv','corpus_eval.csv',args.vocab]:
-        datastore.upload(files=[input],
-                         target_path='corpus',
-                         overwrite=True)
-    
+        datastore.upload_files([input],
+                               target_path='corpus',
+                               overwrite=True)
+            
 if __name__ == '__main__':
     main()
         
