@@ -20,6 +20,7 @@ class ENV:
     min_nodes: Optional[int] = os.environ.get('MIN_NODES')
     datastore_name: Optional[str] = os.environ.get('DATASTORE_NAME')
     pipeline_name: Optional[str] = os.environ.get('PIPELINE_NAME')
+    vocab: Optional[str] = os.environ.get('VOCAB')
     
     model_name: Optional[str] = os.environ.get('MODEL_NAME')
     model_version: Optional[str] = os.environ.get('MODEL_VERSION')

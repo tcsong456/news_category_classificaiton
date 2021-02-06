@@ -6,7 +6,6 @@ from torch.utils.data import DataLoader
 from torch.optim import Adam
 from torch import nn
 from tokenee import Tokenizer
-import pickle
 from create_corpus import Corpus
 from model import CBOWClassifier,LSTMClassifier
 import logzero
@@ -138,6 +137,7 @@ if __name__ == '__main__':
     for key,value in args_dict:
         run.log(key,value)
         run.parent.log(key,value)
+    vocab = args.vocab
         
     args.tokenizer = args.tokenizer.lower()
     if args.tokenizer == TOKENIZER[0]:
@@ -149,8 +149,6 @@ if __name__ == '__main__':
     else:
         raise ValueError(f'{args.tokenizer} is not supported!')
     
-    with open(args.vocab,'rb') as f:
-        vocab = pickle.load(f)
     tokenizer = Tokenizer(token_fn=tokenize_fn,
                           is_sentence=args.is_sentence,
                           max_len=args.max_seq_len,
@@ -214,4 +212,5 @@ if __name__ == '__main__':
             
             
     
+
     #%%

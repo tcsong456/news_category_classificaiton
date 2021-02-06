@@ -1,9 +1,11 @@
-from azureml.core import Workspace,Experiment
+from azureml.core import Workspace,Experiment,Dataset
 from azureml.pipeline.core import PublishedPipeline
 from azureml.core.authentication import ServicePrincipalAuthentication
 from env_variables import ENV
 import json
+import pickle
 import argparse
+from azure.azure_utils import use_or_create_datastore
 
 def parseargs():
     parser = argparse.ArgumentParser()
@@ -25,6 +27,15 @@ def main():
                        resource_grouop=env.resource_group,
                        subscription_id=env.subscription_id,
                        auth=auth)
+    datastore = use_or_create_datastore(ws=ws,
+                                        datastore_name=env.datastore_name,
+                                        use_default=False)
+    train_corpus = Dataset.Tabular.from_delimited_files(path=(datastore,args.train_corpus))
+    eval_corpus = Dataset.Tabular.from_delimited_files(path=(datastore,args.eval_corpus))
+    vocab = Dataset.file.from_files(path=(datastore,args.vocab))
+    vocab.download('.',overwrite=True)
+    with open(env.vocab,'r') as f:
+        vocab = pickle.load(f)
     
     matched_pipe = []
     pipeline_list = PublishedPipeline.list(ws)
@@ -53,11 +64,11 @@ def main():
                                     'batch_train':env.batch_size_train,
                                     'batch_eval':env.batch_size_eval,
                                     'tokenizer':env.tokenizer,
-                                    'vocab':args.vocab,
+                                    'vocab':vocab,
                                     'is_sentence':env.is_sentence,
                                     'max_seq_len':env.max_seq_len,
-                                    'train_corpus':args.train_corpus,
-                                    'eval_corpus':args.eval_corpus,
+                                    'train_corpus':train_corpus,
+                                    'eval_corpus':eval_corpus,
                                     'mode':env.fasttext_mode,
                                     'hidden_size':env.hidden_size,
                                     'num_layers':env.num_layers,

@@ -59,41 +59,38 @@ stages:
           fi
           export SUBSCRIPTION_ID=$(az account show --query id -o tsv)
           python azure/upload.py --corpus_train corpus_train.txt --corpus_eval corpus_eval.txt --vocab vocab_train.pkl
-#  - job: 'Build_Pipeline'
-#    dependsOn: 'Create_Corpus'
-#    condition: succeeded()
-#    displayName: 'Build pipeline'
-#    container: mlops
-#    timeoutInMinutes: 0
-#    steps:
-#    - task: AzureCLI@1
-#      inputs:
-#        azureSubscription: '$(WORKSPACE_SVC_CONNECTION)'
-#        scriptLocation: inlineScript
-#        workingDirectory: $(Build.SourcesDirectory)
-#        inlineScript: |
-#          set -e
-#          export SUBSCRIPTION_ID=$(az account show --query id -o tsv)
-#          python azure/pipeline.py
-#  - job: 'Run_Pipeline'
-#    dependsOn: 'Create_Corpus'
-#    condition: succeeded()
-#    displayName: 'running pipeline'
-#    container: mlops
-#    timeoutInMinutes: 0
-#    variables:
-#      TRAIN_DATA: $[ dependencies.Create_Corpus.outputs['getcorpus.train_data'] ]
-#      EVAL_DATA: $[ dependencies.Create_Corpus.outputs['getcorpus.eval_data'] ]
-#      VOCAB: $[ dependencies.Create_Corpus.outputs['getcorpus.vocab'] ]
-#    steps:
-#    - task: AzureCLI@1
-#      inputs:
-#        azureSubscription: '$(WORKSPACE_SVC_CONNECTION)'
-#        scriptLocation: inlineScript
-#        workingDirectory: $(Build.SourcesDirectory)
-#        inlineScript: |
-#          set -e
-#          export SUBSCRIPTION_ID=$(az account show --query id -o tsv)
-#          python azure/pipeline_run.py --vocab '$(VOCAB)' --train_corpus '$(TRAIN_DATA)' --eval_corpus '$(EVAL_DATA)'
+  - job: 'Build_Pipeline'
+    dependsOn: 'Create_Corpus'
+    condition: succeeded()
+    displayName: 'Build pipeline'
+    container: mlops
+    timeoutInMinutes: 0
+    steps:
+    - task: AzureCLI@1
+      inputs:
+        azureSubscription: '$(WORKSPACE_SVC_CONNECTION)'
+        scriptLocation: inlineScript
+        workingDirectory: $(Build.SourcesDirectory)
+        inlineScript: |
+          set -e
+          export SUBSCRIPTION_ID=$(az account show --query id -o tsv)
+          python azure/pipeline.py
+  - job: 'Run_Pipeline'
+    dependsOn: 'Build_Pipeline'
+    condition: succeeded()
+    displayName: 'running pipeline'
+    container: mlops
+    timeoutInMinutes: 0
+    steps:
+    - task: AzureCLI@1
+      inputs:
+        azureSubscription: '$(WORKSPACE_SVC_CONNECTION)'
+        scriptLocation: inlineScript
+        workingDirectory: $(Build.SourcesDirectory)
+        inlineScript: |
+          set -e
+          export SUBSCRIPTION_ID=$(az account show --query id -o tsv)
+          python azure/pipeline_run.py --vocab 'corpus/vocab_train.pkl' --train_corpus 'corpus/corpus_train.csv' \
+                                       --eval_corpus 'corpus/corpus_eval.csv'
         
           

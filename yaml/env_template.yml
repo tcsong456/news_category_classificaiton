@@ -61,3 +61,5 @@ variables:
     value: 0.0005
   - name: EPOCHS
     value: 20
+  - name: VOCAB
+    value: vocab_train.pkl
