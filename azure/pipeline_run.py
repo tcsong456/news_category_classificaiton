@@ -34,7 +34,7 @@ def main():
                                         use_default=False)
     train_corpus = Dataset.Tabular.from_delimited_files(path=(datastore,args.train_corpus))
     eval_corpus = Dataset.Tabular.from_delimited_files(path=(datastore,args.eval_corpus))
-    vocab = Dataset.file.from_files(path=(datastore,args.vocab))
+    vocab = Dataset.File.from_files(path=(datastore,args.vocab))
     vocab.download('.',overwrite=True)
     with open(env.vocab,'r') as f:
         vocab = pickle.load(f)
