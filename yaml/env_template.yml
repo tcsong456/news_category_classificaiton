@@ -29,6 +29,8 @@ variables:
     value: news_clf_pipe
   - name: MODEL_NAME
     value: news_clf_model.pt
+  - name: MODEL_VERSION
+    value: -1
   - name: CUDA
     value: 'true'
   - name: BATCH_SIZE_TRAIN

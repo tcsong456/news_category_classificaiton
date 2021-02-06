@@ -14,7 +14,8 @@ def get_model(ws,
               model_name,
               model_version=None,
               tags=None):
-    if model_version:
+    model_version = int(model_version)
+    if model_version >= 0:
         model = Model(workspace=ws,
                       name=model_name,
                       version=model_version,
