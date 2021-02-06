@@ -64,7 +64,7 @@ stages:
           echo '##vso[task.setvariable variable=train_data;isOutput=true]$train_data'
           echo '##vso[task.setvariable variable=eval_data;isOutput=true]$eval_data'
           echo '##vso[task.setvariable variable=vocab;isOutput=true]$vocab'
-  - job:'Build_Pipeline'
+  - job: 'Build_Pipeline'
     dependsOn: 'Create_Corpus'
     condition: succeeded()
     displayName: 'Build pipeline'
@@ -80,7 +80,7 @@ stages:
           set -e
           export SUBSCRIPTION_ID=$(az account show --query id -o tsv)
           python azure/pipeline.py
-  - job:'Run_Pipeline'
+  - job: 'Run_Pipeline'
     dependsOn: 'Create_Corpus'
     condition: succeeded()
     displayName: 'running pipeline'
