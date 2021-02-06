@@ -70,9 +70,12 @@ if __name__ == '__main__':
     
     list_of_tokens = []
     with open(args.corpus,'r',encoding='-utf-8',errors='ignore') as f:
-        for line in f:
-            text = ' '.join(line.split('\t')[1:]).strip()
-            list_of_tokens += tokenizer.tokenize(text)
+        try:
+            for line in f:
+                text = ' '.join(line.split('\t')[1:]).strip()
+                list_of_tokens += tokenizer.tokenize(text)
+        except Exception as error:
+            print(line,'\t',error)
 
     vocab = Vocab(list_of_tokens=list_of_tokens,
                   bos_token=args.bos_token,
@@ -96,3 +99,4 @@ if __name__ == '__main__':
     
 #%%
 
+   
