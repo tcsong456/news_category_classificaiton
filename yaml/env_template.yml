@@ -27,3 +27,37 @@ variables:
     value: news_cat_clf
   - name: PIPELINE_NAME
     value: news_clf_pipe
+  - name: MODEL_NAME
+    value: news_clf_model.pt
+  - name: CUDA
+    value: 'true'
+  - name: BATCH_SIZE_TRAIN
+    value: 64
+  - name: BATCH_SIZE_EVAL
+    value: 64
+  - name: TOKENIZER
+    value: treebank
+  - name: IS_SENTENCE
+    value: 'false'
+  - name: MAX_SEQ_LEN
+    value: 64
+  - name: FASSTTEXT_MODE
+    value: skipgram
+  - name: HIDDEN_SIZE
+    value: 128
+  - name: NUM_LAYERS
+    value: 2
+  - name: DROPOUT
+    value: 0.5
+  - name: EMBEDDING_SIZE
+    value: 100
+  - name : EMBEDDING_TRAINABLE
+    value: 'true'
+  - name: USE_WORD_EMBEDDING
+    value: 'true'
+  - name: BIDIRECTIONAL
+    value: True
+  - name: LEARNING_RATE
+    value: 0.0005
+  - name: EPOCHS
+    value: 20

@@ -56,7 +56,7 @@ def parseargs():
         help='embedding dim for word vectors')
     arg('--embedding_trainable',type=str,default='true',
         help='whether the embedding vector is trainable')
-    arg('--use_word_embedding',action='store_true',
+    arg('--use_word_embedding',type=str,default='true',
         help='whethe to use provided word embedding')
     arg('--bidirectional',action='store_true',
         help='if bi-directional lstm is used')
@@ -178,7 +178,7 @@ if __name__ == '__main__':
                                embedding_size=args.embedding_size,
                                embedding_trainable=args.embedding_trainable,
                                bidirectional=args.bidirectional,
-                               embedding_weight=vocab.word_embeddings if args.use_word_embedding else None)
+                               embedding_weight=vocab.word_embeddings if args.use_word_embedding=='true' else None)
     elif args.mode == MODE[1]:
         model = CBOWClassifier(input_size=len(vocab),
                                embedding_size=args.embedding_size,
@@ -186,7 +186,7 @@ if __name__ == '__main__':
                                output_size=len(eval_dataset.ltoi),
                                embedding_trainable=args.embedding_trainable,
                                dropout=args.dropout,
-                               embedding_weight=vocab.word_embeddings if args.use_word_embedding else None)
+                               embedding_weight=vocab.word_embeddings if args.use_word_embedding=='true' else None)
     else:
         raise ValueError(f'{args.mode} is not supported')
     

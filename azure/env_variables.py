@@ -21,4 +21,23 @@ class ENV:
     datastore_name: Optional[str] = os.environ.get('DATASTORE_NAME')
     pipeline_name: Optional[str] = os.environ.get('PIPELINE_NAME')
     
+    model_name: Optional[str] = os.environ.get('MODEL_NAME')
+    model_version: Optional[str] = os.environ.get('MODEL_VERSION')
+    cuda: Optional[str] = os.environ.get('CUDA')
+    batch_size_train: Optional[str] = os.environ.get('BATCH_SIZE_TRAIN')
+    batch_size_eval: Optional[str] = os.environ.get('BATCH_SIZE_EVAL')
+    tokenizer: Optional[str] = os.environ.get('TOKENIZER')
+    is_sentence: Optional[str] = os.environ.get('IS_SENTENCE')
+    max_seq_len: Optional[int] = os.environ.get('MAX_SEQ_LEN')
+    fasttext_mode: Optional[str] = os.environ.get('FASSTTEXT_MODE')
+    hidden_size: Optional[int] = os.environ.get('HIDDEN_SIZE')
+    num_layers: Optional[int] = os.environ.get('NUM_LAYERS')
+    dropout: Optional[float] = os.environ.get('DROPOUT')
+    embedding_size: Optional[int] = os.environ.get('EMBEDDING_SIZE')
+    embedding_trainable: Optional[str] = os.environ.get('EMBEDDING_TRAINABLE')
+    use_word_embedding: Optional[str] = os.environ.get('USE_WORD_EMBEDDING')
+    bidirectional: Optional[bool] = os.environ.get('BIDIRECTIONAL')
+    learning_rate: Optional[float] = os.environ.get('LEARNING_RATE')
+    epochs: Optional[int] = os.environ.get('EPOCHS')
+    
 #%%

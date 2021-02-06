@@ -61,8 +61,9 @@ def main():
     num_layers_param = PipelineParameter('num_layers',default_value=2)
     dropout_param = PipelineParameter('dropout',default_value=0.5)
     embedding_size_param = PipelineParameter('embedding_size',default_value=100)
-    embedding_trainable_param = PipelineParameter('embedding_trainable',default_value=True)
-    use_word_embedding_param = PipelineParameter('use_word_embedding',default_value=True)
+    embedding_trainable_param = PipelineParameter('embedding_trainable',default_value='true')
+    use_word_embedding_param = PipelineParameter('use_word_embedding',default_value='true')
+    bidirectional_param = PipelineParameter('bidirectional',default_value='true')
     learning_rate_param = PipelineParameter('learning_rate',default_value=0.01)
     epochs_param = PipelineParameter('epochs',default_value=50)
     batchscore_dataset_param = PipelineParameter('batchscore_dataset',default_value='batchscore_dataset.csv')
@@ -92,6 +93,7 @@ def main():
                                              '--embedding_size',embedding_size_param,
                                              '--embedding_trainable',embedding_trainable_param,
                                              '--use_word_embedding',use_word_embedding_param,
+                                             '--bidirectional',bidirectional_param,
                                              '--learning_rate',learning_rate_param,
                                              '--epochs',epochs_param,
                                              '--save_path',output
