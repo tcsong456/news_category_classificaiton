@@ -69,7 +69,7 @@ if __name__ == '__main__':
                           max_len=args.max_seq_len)
     
     list_of_tokens = []
-    with open(args.corpus,'r',encoding='-utf-8',errors='ignore') as f:
+    with open(args.corpus,'r',encoding='-utf-8') as f:
         try:
             for line in f:
                 text = ' '.join(line.split('\t')[1:]).strip()
@@ -98,5 +98,7 @@ if __name__ == '__main__':
     print(f'vocab saved to {args.vocab}')
     
 #%%
+
+    
 
    
