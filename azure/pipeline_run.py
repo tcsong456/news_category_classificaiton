@@ -5,7 +5,9 @@ from env_variables import ENV
 import json
 import pickle
 import argparse
-from azure.azure_utils import use_or_create_datastore
+import sys
+sys.path.append('azure')
+from azure_utils import use_or_create_datastore
 
 def parseargs():
     parser = argparse.ArgumentParser()
@@ -85,5 +87,3 @@ def main():
 if __name__ == '__main__':
     main()
 #%%
-
-
