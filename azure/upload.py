@@ -42,7 +42,7 @@ def main():
                        auth=auth)
     datastore = use_or_create_datastore(ws=ws,
                                         datastore_name=env.datastore_name)
-    dataframe(args.corpu_train,'corpus_train.csv')
+    dataframe(args.corpus_train,'corpus_train.csv')
     dataframe(args.corpus_eval,'corpus_eval.csv')
     
     for input in ['corpus_train.csv','corpus_eval.csv',args.vocab]:
