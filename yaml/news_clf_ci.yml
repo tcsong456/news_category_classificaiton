@@ -57,6 +57,7 @@ stages:
           else
             echo 'vocab_train.pkl found'
           fi
+          export SUBSCRIPTION_ID=$(az account show --query id -o tsv)
           python azure/upload.py --corpus_train corpus_train.txt --corpus_eval corpus_eval.txt --vocab vocab_train.pkl
 #  - job: 'Build_Pipeline'
 #    dependsOn: 'Create_Corpus'
