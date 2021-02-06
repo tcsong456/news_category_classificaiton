@@ -8,6 +8,7 @@ class ENV:
     workspace: Optional[str] = os.environ.get('WORKSPACE')
     resource_group: Optional[str] = os.environ.get('RESOURCE_GROUP')
     build_id: Optional[str] = os.environ.get('BUILD_ID')
+    build_url: Optional[str] = os.environ.get('BUILD_URL')
     cpu_vm_size_scoring: Optional[str] = os.environ.get('CPU_VM_SIZE_SCORING')
     cpu_vm_size: Optional[str] = os.environ.get('CPU_VM_SIZE')
     gpu_vm_size_scoring: Optional[str] = os.environ.get('GPU_VM_SIZE_SCORING')

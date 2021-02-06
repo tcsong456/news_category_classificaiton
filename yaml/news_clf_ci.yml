@@ -19,6 +19,9 @@ pool:
 stages:
 - stage: 'Model_CI'
   displayName: 'Model CI'
+  variables:
+    BUILD_ID: '$(BUILD.BUILDID)'
+    BUILD_URL: '$(SYSTEM.COLLECTIONURI)$(SYSTEM.TEAMPROJECT)/_build/results?buildId=$(BUILD.BUILDID)'
   jobs:
   - job: 'Create_Corpus'
     displayName: 'Creating Corpus'
