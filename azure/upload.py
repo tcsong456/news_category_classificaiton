@@ -41,7 +41,8 @@ def main():
                        subscription_id=env.subscription_id,
                        auth=auth)
     datastore = use_or_create_datastore(ws=ws,
-                                        datastore_name=env.datastore_name)
+                                        datastore_name=env.datastore_name,
+                                        use_default=False)
     dataframe(args.corpus_train,'corpus_train.csv')
     dataframe(args.corpus_eval,'corpus_eval.csv')
     
