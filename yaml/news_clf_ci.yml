@@ -23,6 +23,7 @@ stages:
   - job: 'Create_Corpus'
     displayName: 'Creating Corpus'
     container: mlops
+    condition: eq(variables['RUN_MODEL_CI'],'true')
     timeoutInMinutes: 0
     steps:
     - task: AzureCLI@1

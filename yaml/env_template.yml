@@ -63,3 +63,5 @@ variables:
     value: 20
   - name: VOCAB
     value: vocab_train.pkl
+  - name: RUN_MODEL_CI
+    value: false
