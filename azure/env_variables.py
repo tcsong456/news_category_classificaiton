@@ -22,6 +22,7 @@ class ENV:
     datastore_name: Optional[str] = os.environ.get('DATASTORE_NAME')
     pipeline_name: Optional[str] = os.environ.get('PIPELINE_NAME')
     vocab: Optional[str] = os.environ.get('VOCAB')
+    experiment_name: Optional[str] = os.environ.get('EXPERIMENT_NAME')
     
     model_name: Optional[str] = os.environ.get('MODEL_NAME')
     model_version: Optional[str] = os.environ.get('MODEL_VERSION')

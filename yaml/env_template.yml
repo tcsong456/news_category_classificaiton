@@ -31,6 +31,8 @@ variables:
     value: news_clf_model.pt
   - name: MODEL_VERSION
     value: -1
+  - name: EXPERIMENT_NAME
+    value: news_clf_exp
   - name: CUDA
     value: 'true'
   - name: BATCH_SIZE_TRAIN

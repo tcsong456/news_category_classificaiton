@@ -48,7 +48,7 @@ def main():
         if env.build_url is not None:
             tags.update({'build_url':env.build_url})
     exp = Experiment(workspace=ws,
-                     name=env.workspace)
+                     name=env.experiment_name)
     exp.submit(published_pipeline,
                tags=tags,
                pipeline_parameters={'model_name':env.model_name,
