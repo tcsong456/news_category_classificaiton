@@ -1,5 +1,4 @@
 import argparse
-from tqdm import tqdm
 import numpy as np
 import torch
 from torch.utils.data import DataLoader
@@ -89,10 +88,9 @@ def single_train(args,
                  ):
     n_samples = len(train_loader.dataset)
     rounds = np.ceil(n_samples / args.batch_size_train)
-    tq = tqdm(train_loader,total=rounds)
     total_losses,total_acc = 0,0
     model.train()
-    for texts,targets in tq:
+    for texts,targets in train_loader:
         preds = model(texts)
         loss = loss_fn(preds,targets)
         total_losses += loss.item()
@@ -117,11 +115,10 @@ def single_eval(args,
                  ):
     n_samples = len(eval_loader.dataset)
     rounds = np.ceil(n_samples / args.batch_size_eval)
-    tq = tqdm(eval_loader,total=rounds)
     total_acc,total_losses = 0,0
     model.eval()
     with torch.no_grad():
-        for texts,targets in tq:
+        for texts,targets in eval_loader:
             preds = model(texts)
             acc = (np.argmax(preds.cpu().data,axis=-1) == targets.cpu().data).sum()
             total_acc += acc.item()
