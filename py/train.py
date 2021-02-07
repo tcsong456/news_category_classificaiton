@@ -140,7 +140,7 @@ if __name__ == '__main__':
     logger = costume_logger('news_clf')
     args = parseargs()
     args_dict = vars(args)
-    for key,value in args_dict:
+    for key,value in args_dict.items():
         run.log(key,value)
         run.parent.log(key,value)
     vocab = args.vocab
