@@ -167,7 +167,7 @@ if __name__ == '__main__':
     eval_corpus = Dataset.Tabular.from_delimited_files(path=(datastore,args.eval_corpus))
     vocab = Dataset.File.from_files(path=(datastore,args.vocab))
     vocab.download('.',overwrite=True)
-    vocab_path = vocab.split('/')[-1]
+    vocab_path = args.vocab.split('/')[-1]
 #    sys.path.append('py')
     with open(vocab_path,'rb') as f:
         vocab = pickle.load(f)
