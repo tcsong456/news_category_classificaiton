@@ -1,3 +1,5 @@
+import sys
+sys.path.append('py')
 import argparse
 import numpy as np
 import torch
@@ -13,8 +15,6 @@ import logging
 import json
 import os
 import pickle
-import sys
-sys.path.append('azure')
 from azure_utils import use_or_create_datastore
 import warnings
 warnings.filterwarnings('ignore')
@@ -165,7 +165,7 @@ if __name__ == '__main__':
     vocab = Dataset.File.from_files(path=(datastore,args.vocab))
     vocab.download('.',overwrite=True)
     vocab_path = args.vocab.split('/')[-1]
-    sys.path.append('py')
+#    sys.path.append('py')
     with open(vocab_path,'rb') as f:
         vocab = pickle.load(f)
     
