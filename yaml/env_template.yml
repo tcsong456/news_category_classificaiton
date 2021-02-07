@@ -22,7 +22,7 @@ variables:
   - name: TRAIN_RATIO
     value: 0.7
   - name: MODEL_MODE
-    value: skipgram
+    value: lstm
   - name: DATASTORE_NAME
     value: news_cat_clf
   - name: PIPELINE_NAME
@@ -45,7 +45,7 @@ variables:
     value: 'false'
   - name: MAX_SEQ_LEN
     value: 64
-  - name: FASSTTEXT_MODE
+  - name: FASTTEXT_MODE
     value: skipgram
   - name: HIDDEN_SIZE
     value: 128

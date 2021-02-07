@@ -57,7 +57,7 @@ def main():
                                     'max_seq_len':env.max_seq_len,
                                     'train_corpus':'corpus/corpus_train.csv',
                                     'eval_corpus':'corpus/corpus_eval.csv',
-                                    'mode':env.fasttext_mode,
+                                    'mode':env.model_mode,
                                     'hidden_size':env.hidden_size,
                                     'num_layers':env.num_layers,
                                     'dropout':env.dropout,

@@ -32,7 +32,7 @@ class ENV:
     tokenizer: Optional[str] = os.environ.get('TOKENIZER')
     is_sentence: Optional[str] = os.environ.get('IS_SENTENCE')
     max_seq_len: Optional[int] = int(os.environ.get('MAX_SEQ_LEN'))
-    fasttext_mode: Optional[str] = os.environ.get('FASSTTEXT_MODE')
+    model_mode: Optional[str] = os.environ.get('MODEL_MODE')
     hidden_size: Optional[int] = int(os.environ.get('HIDDEN_SIZE'))
     num_layers: Optional[int] = int(os.environ.get('NUM_LAYERS'))
     dropout: Optional[float] = float(os.environ.get('DROPOUT'))

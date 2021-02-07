@@ -54,7 +54,7 @@ stages:
           wc -l corpus_train_text.txt
           python py/build_vocab.py --tokenizer 'treebank' --max_seq_len 1024 \
           --input corpus_train_text.txt --corpus corpus_train.txt --vocab vocab_train.pkl \
-          --min_freq 3 --mode $(MODEL_MODE) --lower --pretrained_vectors
+          --min_freq 3 --mode $(FASTTEXT_MODE) --lower --pretrained_vectors
           if [ ! -f 'vocab_train.pkl' ];then
             echo 'vocab_train.pkl not produced'
             exit 1
