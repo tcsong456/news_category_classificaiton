@@ -168,7 +168,6 @@ if __name__ == '__main__':
     vocab = Dataset.File.from_files(path=(datastore,args.vocab))
     vocab.download('.',overwrite=True)
     vocab_path = args.vocab.split('/')[-1]
-#    sys.path.append('py')
     with open(vocab_path,'rb') as f:
         vocab = pickle.load(f)
     
@@ -176,10 +175,10 @@ if __name__ == '__main__':
                           is_sentence=args.is_sentence,
                           max_len=args.max_seq_len,
                           vocab=vocab)
-    train_dataset = Corpus(corpus_path=args.train_corpus,
+    train_dataset = Corpus(corpus=train_corpus,
                            tokenizer=tokenizer,
                            cuda=args.cuda)
-    eval_dataset = Corpus(corpus_path=args.eval_corpus,
+    eval_dataset = Corpus(corpus=eval_corpus,
                           tokenizer=tokenizer,
                           cuda=args.cuda)
     train_loader = DataLoader(dataset=train_dataset,
