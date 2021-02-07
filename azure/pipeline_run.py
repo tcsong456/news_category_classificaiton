@@ -3,17 +3,16 @@ from azureml.pipeline.core import PublishedPipeline
 from azureml.core.authentication import ServicePrincipalAuthentication
 from env_variables import ENV
 import json
-import argparse
+#import argparse
 
-def parseargs():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--bidirectional',action='store_true',
-                        help='if bidirectional network is used')
-    args = parser.parse_args()
-    return args
+#def parseargs():
+#    parser = argparse.ArgumentParser()
+#    parser.add_argument('--bidirectional',action='store_true',
+#                        help='if bidirectional network is used')
+#    args = parser.parse_args()
+#    return args
 
 def main():
-    args = parseargs()
     env = ENV()
     with open('config.json','r') as f:
         config = json.load(f)
@@ -64,7 +63,7 @@ def main():
                                     'embedding_size':env.embedding_size,
                                     'embedding_trainable':env.embedding_trainable,
                                     'use_word_embedding':env.use_word_embedding,
-                                    'bidirectional':args.bidirectional,
+#                                    'bidirectional':args.bidirectional,
                                     'learning_rate':env.learning_rate,
                                     'epochs':env.epochs,
                                     })

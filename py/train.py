@@ -63,8 +63,8 @@ def parseargs():
         help='whether the embedding vector is trainable')
     arg('--use_word_embedding',type=str,default='true',
         help='whethe to use provided word embedding')
-    arg('--bidirectional',action='store_true',
-        help='if bi-directional lstm is used')
+#    arg('--bidirectional',action='store_true',
+#        help='if bi-directional lstm is used')
     arg('--learning_rate',type=float,default=0.0001,
         help='learning rate of optimizer')
     arg('--epochs',type=int,default=50,
@@ -195,7 +195,7 @@ if __name__ == '__main__':
                                dropout=args.dropout,
                                embedding_size=args.embedding_size,
                                embedding_trainable=args.embedding_trainable,
-                               bidirectional=args.bidirectional,
+                               bidirectional=True,
                                embedding_weight=vocab.word_embeddings if args.use_word_embedding=='true' else None)
     elif args.mode == MODE[1]:
         model = CBOWClassifier(input_size=len(vocab),
