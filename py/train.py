@@ -65,8 +65,6 @@ def parseargs():
         help='whether the embedding vector is trainable')
     arg('--use_word_embedding',type=str,default='true',
         help='whethe to use provided word embedding')
-#    arg('--bidirectional',action='store_true',
-#        help='if bi-directional lstm is used')
     arg('--learning_rate',type=float,default=0.0001,
         help='learning rate of optimizer')
     arg('--epochs',type=int,default=50,
@@ -93,9 +91,8 @@ def single_train(args,
     n_samples = len(train_loader.dataset)
     rounds = np.ceil(n_samples / args.batch_size_train)
     total_losses,total_acc = 0,0
-    tq = tqdm(train_loader,total=rounds)
     model.train()
-    for texts,targets in tq:
+    for texts,targets in train_loader:
         preds = model(texts)
         loss = loss_fn(preds,targets)
         total_losses += loss.item()
@@ -121,10 +118,9 @@ def single_eval(args,
     n_samples = len(eval_loader.dataset)
     rounds = np.ceil(n_samples / args.batch_size_eval)
     total_acc,total_losses = 0,0
-    tq = tqdm(eval_loader,total=rounds)
     model.eval()
     with torch.no_grad():
-        for texts,targets in tq:
+        for texts,targets in eval_loader:
             preds = model(texts)
             acc = (np.argmax(preds.cpu().data,axis=-1) == targets.cpu().data).sum()
             total_acc += acc.item()
@@ -216,8 +212,9 @@ if __name__ == '__main__':
     if args.cuda:
         model = model.cuda()
     
-    for epoch in range(args.epochs):
-        print('training starts!')
+    tq = tqdm(range(args.epochs),total=args.epochs)
+    print('training starts!')
+    for epoch in tq:
         single_train(args=args,
                      epoch=epoch,
                      model=model,
@@ -236,10 +233,3 @@ if __name__ == '__main__':
     
 
     #%%
-#from azureml.core import Dataset,Workspace
-#ws = Workspace.get(name='aml-workspace',
-#                   resource_group='aml-resource-group',
-#                   subscription_id='64c727c2-4f98-4ef1-a45f-09eb33c1bd59')
-#datastore = ws.datastores['news_cat_clf']
-#dataset = Dataset.Tabular.from_delimited_files(path=(datastore,'corpus/corpus_train.csv'))
-#data = dataset.to_pandas_dataframe()

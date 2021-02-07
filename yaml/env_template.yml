@@ -64,7 +64,7 @@ variables:
   - name: LEARNING_RATE
     value: 0.0005
   - name: EPOCHS
-    value: 20
+    value: 5
   - name: VOCAB
     value: vocab_train.pkl
   - name: RUN_MODEL_CI
