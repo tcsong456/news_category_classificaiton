@@ -63,7 +63,6 @@ def main():
                                     'embedding_size':env.embedding_size,
                                     'embedding_trainable':env.embedding_trainable,
                                     'use_word_embedding':env.use_word_embedding,
-#                                    'bidirectional':args.bidirectional,
                                     'learning_rate':env.learning_rate,
                                     'epochs':env.epochs,
                                     })

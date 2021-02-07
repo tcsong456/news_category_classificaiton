@@ -132,6 +132,7 @@ def single_eval(args,
         run.log('eval_avg_acc',np.round(avg_acc,3))
         run.parent.log('eval_avg_acc',np.round(avg_acc,3))
         logger.info(f'eval: epoch:{epoch},avg loss:{avg_loss:.5f},avg acc:{avg_acc:.3f}')
+    return avg_acc
 
 if __name__ == '__main__':
     run = Run.get_context()
@@ -213,6 +214,7 @@ if __name__ == '__main__':
         model = model.cuda()
     
     tq = tqdm(range(args.epochs),total=args.epochs)
+    best_eval_acc = 0
     print('training starts!')
     for epoch in tq:
         single_train(args=args,
@@ -221,15 +223,20 @@ if __name__ == '__main__':
                      loss_fn=loss_fn,
                      optimizer=optimizer,
                      train_loader=train_loader)
-        single_eval(args=args,
-                    epoch=epoch,
-                    model=model,
-                    loss_fn=loss_fn,
-                    eval_loader=eval_loader)
+        eval_acc = single_eval(args=args,
+                               epoch=epoch,
+                               model=model,
+                               loss_fn=loss_fn,
+                               eval_loader=eval_loader)
+        if eval_acc > best_eval_acc:
+            best_eval_acc = eval_acc
+            state_dict = model.state_dict()
+    model.load_state_dict(state_dict)
     
     os.makedirs(args.save_path,exist_ok=True)
-    torch.save(model,os.path.join(args.save_path,args.model_name))        
-            
+    model_path = os.path.join(args.save_path,args.model_name)
+    torch.save(model,model_path)        
+    print(f'saving model to {model_path}')
             
     
 
