@@ -175,10 +175,10 @@ if __name__ == '__main__':
                           is_sentence=args.is_sentence,
                           max_len=args.max_seq_len,
                           vocab=vocab)
-    train_dataset = Corpus(corpus=train_corpus,
+    train_dataset = Corpus(corpus=train_corpus.to_pandas_dataframe(),
                            tokenizer=tokenizer,
                            cuda=args.cuda)
-    eval_dataset = Corpus(corpus=eval_corpus,
+    eval_dataset = Corpus(corpus=eval_corpus.to_pandas_dataframe(),
                           tokenizer=tokenizer,
                           cuda=args.cuda)
     train_loader = DataLoader(dataset=train_dataset,
@@ -236,3 +236,10 @@ if __name__ == '__main__':
     
 
     #%%
+#from azureml.core import Dataset,Workspace
+#ws = Workspace.get(name='aml-workspace',
+#                   resource_group='aml-resource-group',
+#                   subscription_id='64c727c2-4f98-4ef1-a45f-09eb33c1bd59')
+#datastore = ws.datastores['news_cat_clf']
+#dataset = Dataset.Tabular.from_delimited_files(path=(datastore,'corpus/corpus_train.csv'))
+#data = dataset.to_pandas_dataframe()
