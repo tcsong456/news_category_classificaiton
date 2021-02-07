@@ -29,16 +29,6 @@ def main():
                        resource_group=env.resource_group,
                        subscription_id=env.subscription_id,
                        auth=auth)
-    datastore = use_or_create_datastore(ws=ws,
-                                        datastore_name=env.datastore_name,
-                                        use_default=False)
-    train_corpus = Dataset.Tabular.from_delimited_files(path=(datastore,args.train_corpus))
-    eval_corpus = Dataset.Tabular.from_delimited_files(path=(datastore,args.eval_corpus))
-    vocab = Dataset.File.from_files(path=(datastore,args.vocab))
-    vocab.download('.',overwrite=True)
-    sys.path.append('py')
-    with open(env.vocab,'rb') as f:
-        vocab = pickle.load(f)
     
     matched_pipe = []
     pipeline_list = PublishedPipeline.list(ws)
@@ -67,11 +57,11 @@ def main():
                                     'batch_train':env.batch_size_train,
                                     'batch_eval':env.batch_size_eval,
                                     'tokenizer':env.tokenizer,
-                                    'vocab':vocab,
+                                    'vocab':'corpus/vocab_train.pkl',
                                     'is_sentence':env.is_sentence,
                                     'max_seq_len':env.max_seq_len,
-                                    'train_corpus':train_corpus,
-                                    'eval_corpus':eval_corpus,
+                                    'train_corpus':'corpus/corpus_train.csv',
+                                    'eval_corpus':'corpus/corpus_eval.csv',
                                     'mode':env.fasttext_mode,
                                     'hidden_size':env.hidden_size,
                                     'num_layers':env.num_layers,

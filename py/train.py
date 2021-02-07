@@ -10,10 +10,15 @@ from create_corpus import Corpus
 from model import CBOWClassifier,LSTMClassifier
 import logzero
 import logging
+import json
 import os
+import pickle
+import sys
+sys.path.append('azure')
+from azure_utils import use_or_create_datastore
 import warnings
 warnings.filterwarnings('ignore')
-from azureml.core.run import Run
+from azureml.core.run import Run,Dataset
 
 TOKENIZER = ('treebank','mecab')
 MODE = ('lstm','cbow')
@@ -75,7 +80,6 @@ def costume_logger(name):
                                   level=logging.INFO)
     return logger
  
-run = Run.get_context()
 def single_train(args,
                  epoch,
                  model,
@@ -131,6 +135,7 @@ def single_eval(args,
         logger.info(f'eval: epoch:{epoch},avg loss:{avg_loss:.5f},avg acc:{avg_acc:.3f}')
 
 if __name__ == '__main__':
+    run = Run.get_context()
     logger = costume_logger('news_clf')
     args = parseargs()
     args_dict = vars(args)
@@ -148,6 +153,20 @@ if __name__ == '__main__':
         tokenize_fn = Mecab.morphs()
     else:
         raise ValueError(f'{args.tokenizer} is not supported!')
+    
+    with open('config.json','r') as f:
+        config = json.load(f)
+    
+    ws = run.experiment.workspace
+    datastore = use_or_create_datastore(ws=ws,
+                                        datastore_name='nes_cat_clf')
+    train_corpus = Dataset.Tabular.from_delimited_files(path=(datastore,args.train_corpus))
+    eval_corpus = Dataset.Tabular.from_delimited_files(path=(datastore,args.eval_corpus))
+    vocab = Dataset.File.from_files(path=(datastore,args.vocab))
+    vocab.download('.',overwrite=True)
+#    sys.path.append('py')
+    with open(args.vocab,'rb') as f:
+        vocab = pickle.load(f)
     
     tokenizer = Tokenizer(token_fn=tokenize_fn,
                           is_sentence=args.is_sentence,
