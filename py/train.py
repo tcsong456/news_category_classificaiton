@@ -7,6 +7,7 @@ from torch import nn
 from tokenee import Tokenizer
 from create_corpus import Corpus
 from model import CBOWClassifier,LSTMClassifier
+from tqdm import tqdm
 import logzero
 import logging
 import json
@@ -89,8 +90,9 @@ def single_train(args,
     n_samples = len(train_loader.dataset)
     rounds = np.ceil(n_samples / args.batch_size_train)
     total_losses,total_acc = 0,0
+    tq = tqdm(train_loader,total=rounds)
     model.train()
-    for texts,targets in train_loader:
+    for texts,targets in tq:
         preds = model(texts)
         loss = loss_fn(preds,targets)
         total_losses += loss.item()
@@ -116,9 +118,10 @@ def single_eval(args,
     n_samples = len(eval_loader.dataset)
     rounds = np.ceil(n_samples / args.batch_size_eval)
     total_acc,total_losses = 0,0
+    tq = tqdm(eval_loader,total=rounds)
     model.eval()
     with torch.no_grad():
-        for texts,targets in eval_loader:
+        for texts,targets in tq:
             preds = model(texts)
             acc = (np.argmax(preds.cpu().data,axis=-1) == targets.cpu().data).sum()
             total_acc += acc.item()

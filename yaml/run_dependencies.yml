@@ -1,0 +1,13 @@
+name: 'news_clf_dependencies'
+dependencies:
+  python=3.7.*
+  pip
+  
+  pip:
+    - azureml-defaults
+    - azureml-sdk
+    - numpy
+    - pandas
+    - logzero
+    - tqdm
+    - torch

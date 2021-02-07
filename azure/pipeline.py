@@ -43,7 +43,9 @@ def main():
                                         account_key=config['account_key'],
                                         use_default=False)
     environment = use_or_create_environment(ws=ws,
-                                            env_name='pytorch-gpu-env')
+                                            env_name='news_clf_dependencies',
+                                            conda_dependencies='yaml/run_dependencies.yml',
+                                            create_new_env=True)
     
     model_name_param = PipelineParameter('model_name',default_value='news_clf_model.pt')
     model_version_param = PipelineParameter('model_version',default_value='0')

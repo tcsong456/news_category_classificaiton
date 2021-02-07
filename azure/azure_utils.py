@@ -73,9 +73,10 @@ def use_or_create_environment(ws,
                               create_new_env=False):
     assert env_name is not None,'env name must be provided'
     env_list = Environment.list(ws)
-    if env_name in env_list and not create_new_env:
+    if env_name in env_list:
         environment = env_list[env_name]
-    elif create_new_env:
+        return environment
+    elif create_new_env and conda_dependencies is not None:
         environment = Environment.from_conda_specification(name=env_name,
                                                            file_path=conda_dependencies)
     else:
