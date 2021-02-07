@@ -48,6 +48,7 @@ def main():
             print('key not found')
     
     model_path = os.path.join(args.input,args.model_name)
+    print(f'loading model from {model_path}')
     model = torch.load(model_path)
     
     if model is not None:
@@ -63,3 +64,5 @@ def main():
 if __name__ == '__main__':
     main()
 #%%
+#'/mnt/batch/tasks/shared/LS_root/jobs/aml-workspace/azureml/9464383f-ae9b-4fc2-8165-396a43bcf16e/mounts/news_cat_clf/azureml/\
+#9464383f-ae9b-4fc2-8165-396a43bcf16e/output/news_clf_model.pt'

@@ -76,7 +76,7 @@ def main():
     
     train_step = PythonScriptStep(name='train_step',
                                   source_directory='.',
-                                  script_name='py/train.py',
+                                  script_name='azure/train.py',
                                   arguments=[
                                              '--model_name',model_name_param,
                                              '--cuda',cuda_param,
