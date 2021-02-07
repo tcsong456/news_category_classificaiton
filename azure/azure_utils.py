@@ -70,13 +70,16 @@ def use_or_create_environment(ws,
                               conda_dependencies=None,
                               enable_docker=False,
                               use_gpu=False,
-                              create_new_env=False):
+                              create_new_env=False,
+                              overwrite=False):
     assert env_name is not None,'env name must be provided'
     env_list = Environment.list(ws)
-    if env_name in env_list:
+    if overwrite:
+        assert env_name in env_list,'when overwrite is activated,there must be an existing env to be overwritten'
+    if env_name in env_list and not overwrite:
         environment = env_list[env_name]
         return environment
-    elif create_new_env and conda_dependencies is not None:
+    elif (create_new_env and conda_dependencies is not None) or overwrite:
         environment = Environment.from_conda_specification(name=env_name,
                                                            file_path=conda_dependencies)
     else:

@@ -45,7 +45,8 @@ def main():
     environment = use_or_create_environment(ws=ws,
                                             env_name='news_clf_dependencies',
                                             conda_dependencies='yaml/run_dependencies.yml',
-                                            create_new_env=True)
+                                            create_new_env=True,
+                                            overwrite=True)
     
     model_name_param = PipelineParameter('model_name',default_value='news_clf_model.pt')
     model_version_param = PipelineParameter('model_version',default_value='0')

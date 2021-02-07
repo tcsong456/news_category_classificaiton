@@ -20,6 +20,8 @@ import warnings
 warnings.filterwarnings('ignore')
 from azureml.core.run import Run
 from azureml.core import Dataset
+import nltk
+nltk.download('punkt')
 
 TOKENIZER = ('treebank','mecab')
 MODE = ('lstm','cbow')

@@ -99,13 +99,4 @@ if __name__ == '__main__':
     print(f'vocab saved to {args.vocab}')
     
 #%%
-#with open('corpus/corpus_train.txt','r',encoding='-utf-8') as f:
-#    for line in f:
-#        line = line.encode('utf-8').strip()
-#        text = ' '.join(line.split('\t')[1:]).strip()
-#        list_of_tokens += tokenizer.tokenize(text)
-#dataset = Dataset.File.from_files(path=(datastore,'corpus/vocab_train.pkl'))
-#dataset.download('.',overwrite=True)
-#with open('vocab_train.pkl','rb') as f:
-#    vocab = pickle.load(f,errors='sdf')
-#   
+

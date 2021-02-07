@@ -11,3 +11,4 @@ dependencies:
     - logzero
     - tqdm
     - torch
+    - nltk
