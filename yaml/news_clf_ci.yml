@@ -92,7 +92,6 @@ stages:
         inlineScript: |
           set -e
           export SUBSCRIPTION_ID=$(az account show --query id -o tsv)
-          python azure/pipeline_run.py --vocab 'corpus/vocab_train.pkl' --train_corpus 'corpus/corpus_train.csv' \
-                                       --eval_corpus 'corpus/corpus_eval.csv'
+          python azure/pipeline_run.py --bidirectional 
         
           

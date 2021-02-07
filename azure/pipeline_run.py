@@ -7,13 +7,13 @@ import argparse
 
 def parseargs():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--vocab',help='built vocabulary to be used')
-    parser.add_argument('--train_corpus',help='training data to be used')
-    parser.add_argument('--eval_corpus',help='evaluation data to be used')
+    parser.add_argument('--bidirectional',action='store_true',
+                        help='if bidirectional network is used')
     args = parser.parse_args()
     return args
 
 def main():
+    args = parseargs()
     env = ENV()
     with open('config.json','r') as f:
         config = json.load(f)
@@ -64,7 +64,7 @@ def main():
                                     'embedding_size':env.embedding_size,
                                     'embedding_trainable':env.embedding_trainable,
                                     'use_word_embedding':env.use_word_embedding,
-                                    'bidirectional':env.bidirectional,
+                                    'bidirectional':args.bidirectional,
                                     'learning_rate':env.learning_rate,
                                     'epochs':env.epochs,
                                     })
