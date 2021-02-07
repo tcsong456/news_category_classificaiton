@@ -227,6 +227,7 @@ if __name__ == '__main__':
                     loss_fn=loss_fn,
                     eval_loader=eval_loader)
     
+    os.makedirs(args.save_path,exist_ok=True)
     torch.save(model,os.path.join(args.save_path,args.model_name))        
             
             
