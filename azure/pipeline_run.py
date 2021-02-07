@@ -1,13 +1,9 @@
-from azureml.core import Workspace,Experiment,Dataset
+from azureml.core import Workspace,Experiment
 from azureml.pipeline.core import PublishedPipeline
 from azureml.core.authentication import ServicePrincipalAuthentication
 from env_variables import ENV
 import json
-import pickle
 import argparse
-import sys
-sys.path.append('azure')
-from azure_utils import use_or_create_datastore
 
 def parseargs():
     parser = argparse.ArgumentParser()
@@ -18,7 +14,6 @@ def parseargs():
     return args
 
 def main():
-    args = parseargs()
     env = ENV()
     with open('config.json','r') as f:
         config = json.load(f)

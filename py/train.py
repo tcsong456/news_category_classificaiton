@@ -18,7 +18,8 @@ sys.path.append('azure')
 from azure_utils import use_or_create_datastore
 import warnings
 warnings.filterwarnings('ignore')
-from azureml.core.run import Run,Dataset
+from azureml.core.run import Run
+from azureml.core import Dataset
 
 TOKENIZER = ('treebank','mecab')
 MODE = ('lstm','cbow')
