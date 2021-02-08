@@ -11,11 +11,6 @@ class Corpus(Dataset):
         self.cuda = cuda
         self.corpus = corpus
         self.ltoi,self.itol = {},{}
-#        with open(corpus_path,'r',encoding='utf8',errors='ignore') as f:
-#            for line in f:
-#                _line = line.split('\t')
-#                self.corpus.append([_line[0],' '.join(_line[1:]).strip()])
-#        self.corpus = pd.DataFrame(self.corpus,columns=['label','text'])
         labels = sorted(self.corpus.label.unique())
         for i,label in enumerate(labels):
             self.ltoi[label] = i

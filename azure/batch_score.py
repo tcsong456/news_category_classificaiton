@@ -44,7 +44,7 @@ def main():
         help='the value of tag')
     arg('--dataset',type=str,
         help='dataset used to build dataloader')
-    arg('--cuda',action='store_true',
+    arg('--cuda',type=str,default='true',
         help='if gpu is enabled')
     arg('--batch_size',type=int,default=16,
         help='batch size for evaluation')
@@ -65,7 +65,7 @@ def main():
                                       version=model.version,
                                       _workspace=ws)
     model = torch.load(model_path)
-    model = model.cuda() if args.cuda else model
+    model = model.cuda() if args.cuda=='true' else model
     model.eval()
     
     datastore = ws.datastores['news_cat_clf']
