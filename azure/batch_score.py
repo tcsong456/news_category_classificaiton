@@ -115,7 +115,7 @@ def main():
     avg_acc = np.round(accs / len(dataloader),3)
     metrics = {'batchscore_avg_losses':avg_losses,
                'batchscore_avg_acc':avg_acc}
-    for key,value in metrics:
+    for key,value in metrics.items():
         run.log(key,value)
         run.parent.log(key,value)
     output = np.vstack([np.array(result),np.array(target)]).transpose()
