@@ -68,6 +68,7 @@ def main():
     use_word_embedding_param = PipelineParameter('use_word_embedding',default_value='true')
     learning_rate_param = PipelineParameter('learning_rate',default_value=0.01)
     epochs_param = PipelineParameter('epochs',default_value=50)
+    corpus_frac_param = PipelineParameter('corpus_frac',default_value=0.5)
     batchscore_dataset_param = PipelineParameter('batchscore_dataset',default_value='batchscore_dataset.csv')
     output = PipelineData('output',datastore=datastore)
     
@@ -128,7 +129,10 @@ def main():
                                                   '--batch_size',batch_eval_param,
                                                   '--vocab_path',vocab_param,
                                                   '--is_sentence',is_sentence_param,
-                                                  '--max_seq_len',max_seq_len_param],
+                                                  '--max_seq_len',max_seq_len_param,
+                                                  '--train_corpus',train_corpus_param,
+                                                  '--eval_corpus',eval_corpus_param,
+                                                  '--corpus_frac',corpus_frac_param],
                                        compute_target=gpu_compute_target,
                                        runconfig=runconfig,
                                        allow_reuse=False)

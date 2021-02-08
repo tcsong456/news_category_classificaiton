@@ -69,3 +69,5 @@ variables:
     value: vocab_train.pkl
   - name: RUN_MODEL_CI
     value: false
+  - name: CORPUS_FRAC
+    value: 0.4

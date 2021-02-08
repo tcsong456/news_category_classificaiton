@@ -39,8 +39,8 @@ class ENV:
     embedding_size: Optional[int] = int(os.environ.get('EMBEDDING_SIZE'))
     embedding_trainable: Optional[str] = os.environ.get('EMBEDDING_TRAINABLE')
     use_word_embedding: Optional[str] = os.environ.get('USE_WORD_EMBEDDING')
-    bidirectional: Optional[bool] = bool(os.environ.get('BIDIRECTIONAL'))
     learning_rate: Optional[float] = float(os.environ.get('LEARNING_RATE'))
     epochs: Optional[int] = int(os.environ.get('EPOCHS'))
+    corpus_frac: Optional[float] = float(os.environ.get('CORPUS_FRAC'))
     
 #%%

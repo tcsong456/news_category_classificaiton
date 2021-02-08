@@ -58,6 +58,12 @@ def main():
         help='the path to vocab file')
     arg('--is_sentence',type=str,default='false')
     arg('--max_seq_len',type=int,default=128)
+    arg('--train_corpus',type=str,
+        help='the path to training corpus')
+    arg('--eval_corpus',type=str,
+        help='the path to evaluation corpus')
+    arg('--corpus_frac',type=str,
+        help='the fraction of corpus to be used for eval')
     args = parser.parse_args()
     
     run = Run.get_context()
@@ -79,7 +85,9 @@ def main():
     model.eval()
     
     datastore = ws.datastores['news_cat_clf']
-    eval_corpus = Dataset.Tabular.from_delimited_files(path=(datastore,args.dataset))
+    train_corpus = Dataset.Tabular.from_delimited_files(path=(datastore,args.train_corpus)).to_pandas_dataframe()
+    eval_corpus = Dataset.Tabular.from_delimited_files(path=(datastore,args.eval_corpus)).to_pandas_dataframe()
+    corpus = pd.concat([train_corpus,eval_corpus]).sample(frac=args.corpus_frac).reset_index(drop=True)
     tokenize_fn = word_tokenize
     vocab = Dataset.File.from_files(path=(datastore,args.vocab_path))
     vocab.download('.',overwrite=True)
@@ -90,7 +98,7 @@ def main():
                           is_sentence=args.is_sentence,
                           max_len=args.max_seq_len,
                           vocab=vocab)
-    dataset = Corpus(corpus=eval_corpus.to_pandas_dataframe(),
+    dataset = Corpus(corpus=corpus,
                      tokenizer=tokenizer,
                      cuda=args.cuda)
     dataloader = DataLoader(dataset=dataset,
@@ -106,24 +114,28 @@ def main():
         losses += loss.item()
         result = np.argmax(preds.cpu().data,axis=-1)
         target = target.cpu().data
-        results.append(result),targets.append(target)
+        results.append(result.numpy()),targets.append(target.numpy())
         acc = (result == target).sum()
         accs += acc
     
-    n_rounds = np.ceil(len(dataloader) / args.batch_size)
+    n_samples = len(dataloader.dataset)
+    n_rounds = np.ceil(n_samples / args.batch_size)
     avg_losses = np.round(losses / n_rounds,5)
-    avg_acc = np.round(accs / len(dataloader),3)
+    avg_acc = np.round(accs / n_samples,3)
     metrics = {'batchscore_avg_losses':avg_losses,
                'batchscore_avg_acc':avg_acc}
     for key,value in metrics.items():
         run.log(key,value)
         run.parent.log(key,value)
-    output = np.vstack([np.array(result),np.array(target)]).transpose()
-    output = pd.DataFrame(output,columns=['pred','target'])
+    results = np.concatenate(results)
+    targets = np.concatenate(targets)
+    output = np.vstack([np.array(targets),np.array(results)]).transpose()
+    output = pd.DataFrame(output,columns=['label','pred'])
     output.to_csv('batch_socre.csv',index=False)
     
     datastore = use_or_create_datastore(ws=ws,
-                                        datastore_name='news_cat_clf')
+                                        datastore_name='news_cat_clf',
+                                        default=False)
     datastore.upload_files(files=['batch_socre.csv'],
                            target_path='batchscore',
                            overwrite=True)
