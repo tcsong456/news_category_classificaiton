@@ -4,6 +4,8 @@ import torch
 import argparse
 import json
 import os
+import sys
+sys.path.append('py')
 
 def register_model(run_id,
                    exp,
@@ -49,17 +51,17 @@ def main():
     
     model_path = os.path.join(args.input,args.model_name)
     print(f'loading model from {model_path}')
-#    model = torch.load(model_path)
+    model = torch.load(model_path)
     
-#    if model is not None:
-    run_id = run.id
-    register_model(run_id=run_id,
-                   exp=exp,
-                   model_path=model_path,
-                   model_name=args.model_name,
-                   mtags=mtags)
-#    else:
-#        raise Exception('model is not found')
+    if model is not None:
+        run_id = run.id
+        register_model(run_id=run_id,
+                       exp=exp,
+                       model_path=model_path,
+                       model_name=args.model_name,
+                       mtags=mtags)
+    else:
+        raise Exception('model is not found')
 
 if __name__ == '__main__':
     main()

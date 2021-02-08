@@ -9,6 +9,8 @@ from nltk.tokenize import word_tokenize
 import numpy as np
 import pandas as pd
 from azure_utils import use_or_create_datastore
+import sys
+sys.path.append('py')
 
 def get_model(ws,
               model_name,
