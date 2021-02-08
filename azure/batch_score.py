@@ -120,6 +120,7 @@ def main():
         run.parent.log(key,value)
     output = np.vstack([np.array(result),np.array(target)]).transpose()
     output = pd.DataFrame(output,columns=['pred','target'])
+    output.to_csv('batch_socre.csv',index=False)
     
     datastore = use_or_create_datastore(ws=ws,
                                         datastore_name='news_cat_clf')
