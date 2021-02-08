@@ -62,7 +62,7 @@ def main():
         help='the path to training corpus')
     arg('--eval_corpus',type=str,
         help='the path to evaluation corpus')
-    arg('--corpus_frac',type=str,
+    arg('--corpus_frac',type=float,
         help='the fraction of corpus to be used for eval')
     args = parser.parse_args()
     

@@ -3,14 +3,6 @@ from azureml.pipeline.core import PublishedPipeline
 from azureml.core.authentication import ServicePrincipalAuthentication
 from env_variables import ENV
 import json
-#import argparse
-
-#def parseargs():
-#    parser = argparse.ArgumentParser()
-#    parser.add_argument('--bidirectional',action='store_true',
-#                        help='if bidirectional network is used')
-#    args = parser.parse_args()
-#    return args
 
 def main():
     env = ENV()
