@@ -1,4 +1,4 @@
-from azureml.core.model import Model
+from azureml.core.model import Model,Dataset
 from azureml.core.run import Run
 import argparse
 import torch
@@ -46,7 +46,7 @@ def main():
         help='dataset used to build dataloader')
     arg('--cuda',action='store_true',
         help='if gpu is enabled')
-    arg('--batch_size',type=int,defautl=16,
+    arg('--batch_size',type=int,default=16,
         help='batch size for evaluation')
     args = parser.parse_args()
     
@@ -68,8 +68,10 @@ def main():
     model = model.cuda() if args.cuda else model
     model.eval()
     
+    datastore = ws.datastores['news_cat_clf']
+    eval_corpus = Dataset.Tabular.from_delimited_files(path=(datastore,args.dataset))
     tokenizer_fn = word_tokenize
-    dataset = Corpus(corpus_path=args.dataset,
+    dataset = Corpus(corpus=eval_corpus.to_pandas_dataframe(),
                      tokenizer=tokenizer_fn,
                      cuda=args.cuda)
     dataloader = DataLoader(dataset=dataset,

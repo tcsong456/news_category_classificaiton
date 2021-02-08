@@ -65,6 +65,7 @@ def main():
                                     'use_word_embedding':env.use_word_embedding,
                                     'learning_rate':env.learning_rate,
                                     'epochs':env.epochs,
+                                    'batchscore_dataset':'corpus/corpus_eval.csv'
                                     })
     print(f'{env.pipeline_name} has been submitted!')
 
