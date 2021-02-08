@@ -135,7 +135,7 @@ def main():
     
     datastore = use_or_create_datastore(ws=ws,
                                         datastore_name='news_cat_clf',
-                                        default=False)
+                                        use_default=False)
     datastore.upload_files(files=['batch_socre.csv'],
                            target_path='batchscore',
                            overwrite=True)
