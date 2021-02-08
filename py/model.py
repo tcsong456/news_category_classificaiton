@@ -68,17 +68,3 @@ class LSTMClassifier(nn.Module):
         return result
 
 #%%
-#model = LSTMClassifier(input_size=100,
-#                         hidden_size=128,
-#                         output_size=45,
-#                         num_layers=2,
-#                         dropout=0.5,
-#                         embedding_size=100,
-#                         embedding_trainable=True,
-#                         bidirectional=True,
-#                         embedding_weight=None)
-#model = model.cuda()
-#torch.save(model,'./model.pt')
-#model = torch.load('./model.pt')
-#model.load_state_dict(state_dict)
-#model

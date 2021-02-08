@@ -9,8 +9,10 @@ from nltk.tokenize import word_tokenize
 import numpy as np
 import pandas as pd
 from azure_utils import use_or_create_datastore
+import pickle
 import sys
 sys.path.append('py')
+from tokenee import Tokenizer
 
 def get_model(ws,
               model_name,
@@ -50,6 +52,10 @@ def main():
         help='if gpu is enabled')
     arg('--batch_size',type=int,default=16,
         help='batch size for evaluation')
+    arg('--vocab_path',type=str,
+        help='the path to vocab file')
+    arg('--is_sentence',type=str,default='false')
+    arg('--max_seq_len',type=int,default=128)
     args = parser.parse_args()
     
     run = Run.get_context()
@@ -72,9 +78,18 @@ def main():
     
     datastore = ws.datastores['news_cat_clf']
     eval_corpus = Dataset.Tabular.from_delimited_files(path=(datastore,args.dataset))
-    tokenizer_fn = word_tokenize
+    tokenize_fn = word_tokenize
+    vocab = Dataset.File.from_files(path=(datastore,args.vocab_path))
+    vocab.download('.',overwrite=True)
+    vocab_path = args.vocab.split('/')[-1]
+    with open(vocab_path,'rb') as f:
+        vocab = pickle.load(f)
+    tokenizer = Tokenizer(token_fn=tokenize_fn,
+                          is_sentence=args.is_sentence,
+                          max_len=args.max_seq_len,
+                          vocab=vocab)
     dataset = Corpus(corpus=eval_corpus.to_pandas_dataframe(),
-                     tokenizer=tokenizer_fn,
+                     tokenizer=tokenizer,
                      cuda=args.cuda)
     dataloader = DataLoader(dataset=dataset,
                             batch_size=args.batch_size,
@@ -84,7 +99,7 @@ def main():
     results,targets = [],[]
     loss_fn = nn.NLLLoss()
     for texts,target in dataloader:
-        preds = model.predict(texts)
+        preds = model(texts)
         loss = loss_fn(preds,target)
         losses += loss.item()
         result = np.argmax(preds.cpu().data,axis=-1)

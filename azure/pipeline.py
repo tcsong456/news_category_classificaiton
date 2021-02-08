@@ -125,7 +125,10 @@ def main():
                                                   '--model_version',model_version_param,
                                                   '--dataset',batchscore_dataset_param,
                                                   '--cuda',cuda_param,
-                                                  '--batch_size',batch_eval_param],
+                                                  '--batch_size',batch_eval_param,
+                                                  '--vocab_path',vocab_param,
+                                                  '--is_sentence',is_sentence_param,
+                                                  '--max_seq_len',max_seq_len_param],
                                        compute_target=gpu_compute_target,
                                        runconfig=runconfig,
                                        allow_reuse=False)
