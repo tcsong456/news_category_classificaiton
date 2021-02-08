@@ -5,6 +5,8 @@ import torch
 from torch import nn
 from torch.utils.data import DataLoader
 from py.create_corpus import Corpus
+import nltk
+nltk.download('punkt')
 from nltk.tokenize import word_tokenize
 import numpy as np
 import pandas as pd
