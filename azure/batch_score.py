@@ -81,7 +81,7 @@ def main():
     tokenize_fn = word_tokenize
     vocab = Dataset.File.from_files(path=(datastore,args.vocab_path))
     vocab.download('.',overwrite=True)
-    vocab_path = args.vocab.split('/')[-1]
+    vocab_path = args.vocab_path.split('/')[-1]
     with open(vocab_path,'rb') as f:
         vocab = pickle.load(f)
     tokenizer = Tokenizer(token_fn=tokenize_fn,
