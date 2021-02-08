@@ -14,6 +14,7 @@ import logzero
 import logging
 import json
 import os
+import copy
 import pickle
 from azure_utils import use_or_create_datastore
 import warnings
@@ -230,7 +231,7 @@ if __name__ == '__main__':
                                eval_loader=eval_loader)
         if eval_acc > best_eval_acc:
             best_eval_acc = eval_acc
-            state_dict = model.state_dict()
+            state_dict = copy.deepcopy(model.state_dict())
     model.load_state_dict(state_dict)
     
     os.makedirs(args.save_path,exist_ok=True)
