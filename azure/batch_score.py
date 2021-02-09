@@ -22,11 +22,13 @@ def get_model(ws,
               tags=None):
     model_version = int(model_version)
     if model_version >= 0:
+        print('loading from model')
         model = Model(workspace=ws,
                       name=model_name,
                       version=model_version,
                       tags=tags)
     else:
+        print('loading from model list')
         models = Model.list(workspace=ws,
                             name=model_name,
                             latest=True)
@@ -72,10 +74,8 @@ def main():
         tags = [(args.tag_name,args.tag_value)]
     
     model = get_model(ws=ws,
-#                      model_name=args.model_name,
-                      model_name='model.pt',
-#                      model_version=args.model_version,
-                      model_version='4',
+                      model_name=args.model_name,
+                      model_version=args.model_version,
                       tags=tags)
     model_path = Model.get_model_path(model_name=model.name,
                                       version=model.version,
