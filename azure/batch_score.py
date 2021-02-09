@@ -116,7 +116,7 @@ def main():
         target = target.cpu().data
         results.append(result.numpy()),targets.append(target.numpy())
         acc = (result == target).sum()
-        accs += acc
+        accs += acc.item()
     
     n_samples = len(dataloader.dataset)
     n_rounds = np.ceil(n_samples / args.batch_size)

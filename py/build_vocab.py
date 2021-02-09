@@ -1,6 +1,5 @@
 import argparse
 import pickle
-import os
 from tokenee import Tokenizer,Vocab
 import nltk
 nltk.download('punkt')
@@ -72,7 +71,6 @@ if __name__ == '__main__':
     with open(args.corpus,'r',encoding='-utf-8') as f:
         try:
             for line in f:
-                line = line.encode('utf-8').strip()
                 text = ' '.join(line.split('\t')[1:]).strip()
                 list_of_tokens += tokenizer.tokenize(text)
         except Exception as error:
@@ -99,4 +97,5 @@ if __name__ == '__main__':
     print(f'vocab saved to {args.vocab}')
     
 #%%
+
 

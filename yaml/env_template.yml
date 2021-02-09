@@ -60,12 +60,12 @@ variables:
   - name: USE_WORD_EMBEDDING
     value: 'true'
   - name: LEARNING_RATE
-    value: 0.0005
+    value: 0.0001
   - name: EPOCHS
-    value: 15
+    value: 10
   - name: VOCAB
     value: vocab_train.pkl
   - name: RUN_MODEL_CI
-    value: false
+    value: true
   - name: CORPUS_FRAC
     value: 0.4

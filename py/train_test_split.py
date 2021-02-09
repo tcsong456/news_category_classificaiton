@@ -27,7 +27,7 @@ if __name__ == '__main__':
                 cat,desc = _line[0].strip(),' '.join(_line[1:]).strip()
                 category.append(cat),description.append(desc)
         text = np.vstack([np.array(category),np.array(description)]).transpose()
-        corpus = pd.DataFrame(text,columns=['lable','text'])
+        corpus = pd.DataFrame(text,columns=['label','text'])
         rand_corpus = corpus.sample(frac=1).reset_index(drop=True)
         n_samples = len(corpus)
         n_train = np.ceil(n_samples*train_ratio).astype(int)
