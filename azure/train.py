@@ -179,6 +179,7 @@ def fix(model):
 
 if __name__ == '__main__':
     run = Run.get_context()
+    print(run.get_metrics(),run.parent.get_metrics())
     logger = costume_logger('news_clf')
     args = parseargs()
     args_dict = vars(args)
@@ -283,6 +284,17 @@ if __name__ == '__main__':
     print(f'saving model to {model_path}')
     
     from azureml.core import Model
+    tags = {'title':'news_classification',
+            'run_id':'123',
+            'exp_name':'abc'}
+    
+    model = torch.load(model_path)
+    if model is not None:
+        Model.register(workspace=ws,
+                       model_path=model_path,
+                       model_name=args.model_name,
+                       tags=tags)
+    
     models = Model.list(workspace=ws,
                         name=args.model_name,
                         latest=True)
