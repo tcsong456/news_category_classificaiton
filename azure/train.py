@@ -135,6 +135,48 @@ def single_eval(args,
         logger.info(f'eval: epoch:{epoch},avg loss:{avg_loss:.5f},avg acc:{avg_acc:.3f}')
     return avg_acc
 
+def fix(model):
+    import pandas as pd
+    vocab = Dataset.File.from_files(path=(datastore,args.vocab))
+    vocab.download('.',overwrite=True)
+    vocab_path = args.vocab.split('/')[-1]
+    with open(vocab_path,'rb') as f:
+        vocab = pickle.load(f)
+    tokenizer = Tokenizer(token_fn=word_tokenize,
+                          is_sentence='false',
+                          max_len=64,
+                          vocab=vocab)
+    losses,accs = 0,0
+    train_corpus = Dataset.Tabular.from_delimited_files(path=(datastore,args.train_corpus)).to_pandas_dataframe()
+    eval_corpus = Dataset.Tabular.from_delimited_files(path=(datastore,args.eval_corpus)).to_pandas_dataframe()
+    corpus = pd.concat([train_corpus,eval_corpus]).sample(frac=0.4).reset_index(drop=True)  
+    dataset = Corpus(
+                     corpus,
+                     tokenizer,
+                     'true')
+    dataloader = DataLoader(dataset=dataset,
+                            batch_size=64,
+                            shuffle=False)
+    
+    results,targets = [],[]
+    loss_fn = nn.NLLLoss()
+    n_samples = len(dataloader.dataset)
+    n_rounds = np.ceil(n_samples / 64)
+    model = model.cuda()
+    model.eval()
+    for texts,target in dataloader:
+        preds = model(texts)
+        loss = loss_fn(preds,target)
+        losses += loss.item()
+        result = np.argmax(preds.cpu().data,axis=-1)
+        target = target.cpu().data
+        results.append(result.numpy()),targets.append(target.numpy())
+        acc = (result == target).sum()
+        accs += acc.item()
+    avg_losses = np.round(losses / n_rounds,5)
+    avg_acc = np.round(accs / n_samples,3)
+    print(f'avg losses: {avg_losses},avg acc: {avg_acc}')
+
 if __name__ == '__main__':
     run = Run.get_context()
     logger = costume_logger('news_clf')
@@ -229,15 +271,27 @@ if __name__ == '__main__':
                                model=model,
                                loss_fn=loss_fn,
                                eval_loader=eval_loader)
-#        if eval_acc > best_eval_acc:
-#            best_eval_acc = eval_acc
-#            state_dict = copy.deepcopy(model.state_dict())
-#    model.load_state_dict(state_dict)
+        if eval_acc > best_eval_acc:
+            best_eval_acc = eval_acc
+            state_dict = copy.deepcopy(model.state_dict())
+    model.load_state_dict(state_dict)
+    fix(model)
     
     os.makedirs(args.save_path,exist_ok=True)
     model_path = os.path.join(args.save_path,args.model_name)
     torch.save(model,model_path)        
     print(f'saving model to {model_path}')
+    
+    from azureml.core import Model
+    models = Model.list(workspace=ws,
+                        name=args.model_name,
+                        latest=True)
+    model = models[-1]
+    model_path = Model.get_model_path(model_name=model.name,
+                                      version=model.version,
+                                      _workspace=ws)
+    model = torch.load(model_path)
+    fix(model)
             
     
 

@@ -48,7 +48,7 @@ def main():
                 mtags[tag] = value
         except KeyError:
             print('key not found')
-    print(mtags)
+    print(run.get_metrics(),run.parent.get_metrics())
     
     model_path = os.path.join(args.input,args.model_name)
     model = torch.load(model_path)
