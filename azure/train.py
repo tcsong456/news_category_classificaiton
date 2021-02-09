@@ -229,10 +229,10 @@ if __name__ == '__main__':
                                model=model,
                                loss_fn=loss_fn,
                                eval_loader=eval_loader)
-        if eval_acc > best_eval_acc:
-            best_eval_acc = eval_acc
-            state_dict = copy.deepcopy(model.state_dict())
-    model.load_state_dict(state_dict)
+#        if eval_acc > best_eval_acc:
+#            best_eval_acc = eval_acc
+#            state_dict = copy.deepcopy(model.state_dict())
+#    model.load_state_dict(state_dict)
     
     os.makedirs(args.save_path,exist_ok=True)
     model_path = os.path.join(args.save_path,args.model_name)

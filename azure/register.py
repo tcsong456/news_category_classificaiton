@@ -48,9 +48,9 @@ def main():
                 mtags[tag] = value
         except KeyError:
             print('key not found')
+    print(mtags)
     
     model_path = os.path.join(args.input,args.model_name)
-    print(f'loading model from {model_path}')
     model = torch.load(model_path)
     
     if model is not None:
