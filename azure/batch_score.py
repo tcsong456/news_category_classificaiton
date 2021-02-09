@@ -48,8 +48,6 @@ def main():
         help='the name of tag')
     arg('--tag_value',type=str,
         help='the value of tag')
-    arg('--dataset',type=str,
-        help='dataset used to build dataloader')
     arg('--cuda',type=str,default='true',
         help='if gpu is enabled')
     arg('--batch_size',type=int,default=16,
@@ -74,8 +72,10 @@ def main():
         tags = [(args.tag_name,args.tag_value)]
     
     model = get_model(ws=ws,
-                      model_name=args.model_name,
-                      model_version=args.model_version,
+#                      model_name=args.model_name,
+                      model_name='model.pt',
+#                      model_version=args.model_version,
+                      model_version='4',
                       tags=tags)
     model_path = Model.get_model_path(model_name=model.name,
                                       version=model.version,

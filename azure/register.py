@@ -44,7 +44,7 @@ def main():
     for tag in register_tags:
         try:
             if tag == 'eval_avg_acc':
-                value = max(run.get_metrics()[tag])
+                value = max(run.parent.get_metrics()[tag])
                 mtags[tag] = value
         except KeyError:
             print('key not found')

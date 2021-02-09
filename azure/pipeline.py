@@ -69,7 +69,6 @@ def main():
     learning_rate_param = PipelineParameter('learning_rate',default_value=0.01)
     epochs_param = PipelineParameter('epochs',default_value=50)
     corpus_frac_param = PipelineParameter('corpus_frac',default_value=0.5)
-    batchscore_dataset_param = PipelineParameter('batchscore_dataset',default_value='batchscore_dataset.csv')
     output = PipelineData('output',datastore=datastore)
     
     runconfig = RunConfiguration()
@@ -124,7 +123,6 @@ def main():
                                        source_directory='.',
                                        arguments=['--model_name',model_name_param,
                                                   '--model_version',model_version_param,
-                                                  '--dataset',batchscore_dataset_param,
                                                   '--cuda',cuda_param,
                                                   '--batch_size',batch_eval_param,
                                                   '--vocab_path',vocab_param,
