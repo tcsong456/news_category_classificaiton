@@ -88,6 +88,7 @@ def main():
     
     run = Run.get_context()
     exp = run.experiment
+    ws = exp.workspace
     
     with open('config.json','r') as f:
         config = json.load(f)
@@ -117,9 +118,6 @@ def main():
     else:
         raise Exception('model is not found')
     
-    from azureml.core.run import Run
-    run = Run.get_context()
-    ws = run.experiment.workspace
     datastore = ws.datastores['news_cat_clf']
     models = Model.list(workspace=ws,
                         name=args.model_name,
