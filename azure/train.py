@@ -179,7 +179,6 @@ def fix(model):
 
 if __name__ == '__main__':
     run = Run.get_context()
-    print(run.get_metrics(),run.parent.get_metrics())
     logger = costume_logger('news_clf')
     args = parseargs()
     args_dict = vars(args)
@@ -187,6 +186,7 @@ if __name__ == '__main__':
         run.log(key,value)
         run.parent.log(key,value)
     vocab = args.vocab
+    print(run.get_metrics(),run.parent.get_metrics())
         
     args.tokenizer = args.tokenizer.lower()
     if args.tokenizer == TOKENIZER[0]:
@@ -276,34 +276,34 @@ if __name__ == '__main__':
             best_eval_acc = eval_acc
             state_dict = copy.deepcopy(model.state_dict())
     model.load_state_dict(state_dict)
-    fix(model)
+#    fix(model)
     
     os.makedirs(args.save_path,exist_ok=True)
     model_path = os.path.join(args.save_path,args.model_name)
     torch.save(model,model_path)        
     print(f'saving model to {model_path}')
     
-    from azureml.core import Model
-    tags = {'title':'news_classification',
-            'run_id':'123',
-            'exp_name':'abc'}
-    
-    model = torch.load(model_path)
-    if model is not None:
-        Model.register(workspace=ws,
-                       model_path=model_path,
-                       model_name=args.model_name,
-                       tags=tags)
-    
-    models = Model.list(workspace=ws,
-                        name=args.model_name,
-                        latest=True)
-    model = models[-1]
-    model_path = Model.get_model_path(model_name=model.name,
-                                      version=model.version,
-                                      _workspace=ws)
-    model = torch.load(model_path)
-    fix(model)
+#    from azureml.core import Model
+#    tags = {'title':'news_classification',
+#            'run_id':'123',
+#            'exp_name':'abc'}
+#    
+#    model = torch.load(model_path)
+#    if model is not None:
+#        Model.register(workspace=ws,
+#                       model_path=model_path,
+#                       model_name=args.model_name,
+#                       tags=tags)
+#    
+#    models = Model.list(workspace=ws,
+#                        name=args.model_name,
+#                        latest=True)
+#    model = models[-1]
+#    model_path = Model.get_model_path(model_name=model.name,
+#                                      version=model.version,
+#                                      _workspace=ws)
+#    model = torch.load(model_path)
+#    fix(model)
             
     
 

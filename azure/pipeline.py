@@ -138,10 +138,11 @@ def main():
     batchscore_step.run_after(register_step)
     
     pipeline = Pipeline(workspace=ws,
-#                        steps=[train_step,register_step,batchscore_step]
-                        steps=[train_step]
+                        steps=[train_step,register_step,batchscore_step]
+#                        steps=[train_step]
                         )
     pipeline.publish(name=env.pipeline_name,
+                     descirption='pipline of news category classification',
                      version=env.build_id)
     
 

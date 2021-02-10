@@ -73,10 +73,14 @@ def main():
     if args.tag_name is not None and args.tag_value is not None:
         tags = [(args.tag_name,args.tag_value)]
     
-    model = get_model(ws=ws,
-                      model_name=args.model_name,
-                      model_version=args.model_version,
-                      tags=tags)
+#    model = get_model(ws=ws,
+#                      model_name=args.model_name,
+#                      model_version=args.model_version,
+#                      tags=tags)
+    models = Model.list(workspace=ws,
+                            name=args.model_name,
+                            latest=True)
+    model = models[-1]
     model_path = Model.get_model_path(model_name=model.name,
                                       version=model.version,
                                       _workspace=ws)
@@ -122,6 +126,7 @@ def main():
     n_rounds = np.ceil(n_samples / args.batch_size)
     avg_losses = np.round(losses / n_rounds,5)
     avg_acc = np.round(accs / n_samples,3)
+    print(f'avg_losses:{avg_losses},avg_acc:{avg_acc}')
     metrics = {'batchscore_avg_losses':avg_losses,
                'batchscore_avg_acc':avg_acc}
     for key,value in metrics.items():
