@@ -139,7 +139,7 @@ def single_eval(args,
 
 if __name__ == '__main__':
     run = Run.get_context()
-    print(f'run:{run}')
+    print(f'run:{run.experiment}')
     logger = costume_logger('news_clf')
     args = parseargs()
     args_dict = vars(args)
