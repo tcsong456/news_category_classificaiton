@@ -142,7 +142,7 @@ def main():
 #                        steps=[train_step]
                         )
     pipeline.publish(name=env.pipeline_name,
-                     descirption='pipline of news category classification',
+                     description='pipline of news category classification',
                      version=env.build_id)
     
 
