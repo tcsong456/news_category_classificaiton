@@ -53,7 +53,7 @@ def main():
             print(f'{tag} key not found')
     
     model_path = os.path.join(args.input,args.model_name)
-    model = torch.load(model_path)
+    model = torch.load(model_path,map_location=torch.device('cpu'))
     
     if model is not None:
         run_id = run.id
