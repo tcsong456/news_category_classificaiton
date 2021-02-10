@@ -160,7 +160,8 @@ if __name__ == '__main__':
     
     ws = run.experiment.workspace
     datastore = use_or_create_datastore(ws=ws,
-                                        datastore_name='nes_cat_clf')
+                                        datastore_name='news_cat_clf',
+                                        use_default=False)
     train_corpus = Dataset.Tabular.from_delimited_files(path=(datastore,args.train_corpus))
     eval_corpus = Dataset.Tabular.from_delimited_files(path=(datastore,args.eval_corpus))
     vocab = Dataset.File.from_files(path=(datastore,args.vocab))
@@ -233,12 +234,16 @@ if __name__ == '__main__':
             best_eval_acc = eval_acc
             state_dict = copy.deepcopy(model.state_dict())
     model.load_state_dict(state_dict)
-#    fix(model)
     
     os.makedirs(args.save_path,exist_ok=True)
     model_path = os.path.join(args.save_path,args.model_name)
     torch.save(model,model_path)        
     print(f'saving model to {model_path}')
+#    with open('path.txt','a') as f:
+#        f.write(model_path)
+#    datastore.upload_files(['path.txt'],
+#                           target_path='corpus',
+#                           overwrite=True)
     
 #    from azureml.core import Model
 #    tags = {'title':'news_classification',
