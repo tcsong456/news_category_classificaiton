@@ -32,6 +32,8 @@ def parseargs():
     arg = parser.add_argument
     arg('--model_name',type=str,default='news_clf_model.pt',
         help='the name of the model')
+    arg('--datastore_name',type=str,
+        help='the name of the datastore to be used')
     arg('--cuda',type=str,default='true',
         help='wether to use gpu or not')
     arg('--batch_size_train',type=int,default=8,
@@ -160,7 +162,7 @@ if __name__ == '__main__':
     
     ws = run.experiment.workspace
     datastore = use_or_create_datastore(ws=ws,
-                                        datastore_name='news_cat_clf',
+                                        datastore_name=args.datastore_name,
                                         use_default=False)
     train_corpus = Dataset.Tabular.from_delimited_files(path=(datastore,args.train_corpus))
     eval_corpus = Dataset.Tabular.from_delimited_files(path=(datastore,args.eval_corpus))
@@ -239,33 +241,6 @@ if __name__ == '__main__':
     model_path = os.path.join(args.save_path,args.model_name)
     torch.save(model,model_path)        
     print(f'saving model to {model_path}')
-#    with open('path.txt','a') as f:
-#        f.write(model_path)
-#    datastore.upload_files(['path.txt'],
-#                           target_path='corpus',
-#                           overwrite=True)
-    
-#    from azureml.core import Model
-#    tags = {'title':'news_classification',
-#            'run_id':'123',
-#            'exp_name':'abc'}
-#    
-#    model = torch.load(model_path)
-#    if model is not None:
-#        Model.register(workspace=ws,
-#                       model_path=model_path,
-#                       model_name=args.model_name,
-#                       tags=tags)
-#    
-#    models = Model.list(workspace=ws,
-#                        name=args.model_name,
-#                        latest=True)
-#    model = models[-1]
-#    model_path = Model.get_model_path(model_name=model.name,
-#                                      version=model.version,
-#                                      _workspace=ws)
-#    model = torch.load(model_path)
-#    fix(model)
             
     
 

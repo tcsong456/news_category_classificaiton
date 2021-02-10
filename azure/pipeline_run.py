@@ -58,6 +58,7 @@ def main():
                                     'learning_rate':env.learning_rate,
                                     'epochs':env.epochs,
                                     'corpus_frac':env.corpus_frac,
+                                    'datastore_name':env.datastore_name,
                                     'batchscore_dataset':'corpus/corpus_eval.csv'
                                     })
     print(f'{env.pipeline_name} has been submitted!')

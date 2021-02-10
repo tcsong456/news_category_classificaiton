@@ -88,7 +88,6 @@ def main():
     
     run = Run.get_context()
     exp = run.experiment
-    ws = exp.workspace
     
     with open('config.json','r') as f:
         config = json.load(f)
@@ -117,18 +116,6 @@ def main():
                        mtags=mtags)
     else:
         raise Exception('model is not found')
-    
-    datastore = ws.datastores['news_cat_clf']
-    models = Model.list(workspace=ws,
-                        name=args.model_name,
-                        latest=True)
-    model = models[-1]
-    model_path = Model.get_model_path(model_name=model.name,
-                                      version=model.version,
-                                      _workspace=ws)
-    model = torch.load(model_path)
-    fix(model,datastore)
-            
 
 if __name__ == '__main__':
     main()

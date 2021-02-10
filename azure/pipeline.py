@@ -69,6 +69,7 @@ def main():
     learning_rate_param = PipelineParameter('learning_rate',default_value=0.01)
     epochs_param = PipelineParameter('epochs',default_value=50)
     corpus_frac_param = PipelineParameter('corpus_frac',default_value=0.5)
+    datastore_param = PipelineParameter('datastore_name',default_value='news_cat_clf')
     output = PipelineData('output',datastore=datastore)
     
     runconfig = RunConfiguration()
@@ -97,7 +98,8 @@ def main():
                                              '--use_word_embedding',use_word_embedding_param,
                                              '--learning_rate',learning_rate_param,
                                              '--epochs',epochs_param,
-                                             '--save_path',output
+                                             '--save_path',output,
+                                             '--datastore_name',datastore_param
                                              ],
                                   outputs=[output],
                                   compute_target=gpu_compute_target,
