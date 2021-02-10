@@ -112,7 +112,7 @@ def main():
                                      arguments=['--model_name',model_name_param,
                                                 '--input',output],
                                      inputs=[output],
-                                     compute_target=gpu_compute_target,
+                                     compute_target=cpu_compute_target,
                                      runconfig=runconfig,
                                      allow_reuse=False)
     print('register_step built')

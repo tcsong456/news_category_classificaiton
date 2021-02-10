@@ -186,7 +186,6 @@ if __name__ == '__main__':
         run.log(key,value)
         run.parent.log(key,value)
     vocab = args.vocab
-    print(run.get_metrics(),run.parent.get_metrics())
         
     args.tokenizer = args.tokenizer.lower()
     if args.tokenizer == TOKENIZER[0]:

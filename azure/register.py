@@ -41,14 +41,15 @@ def main():
         config = json.load(f)
     register_tags = config['registration']
     mtags = {}
-    for tag in register_tags:
+    for tag in register_tags['tags']:
         try:
             if tag == 'eval_avg_acc':
                 value = max(run.parent.get_metrics()[tag])
-                mtags[tag] = value
+            else:
+                value = run.parent.get_metrics()[tag]
+            mtags[tag] = value
         except KeyError:
             print('key not found')
-    print(run.get_metrics(),run.parent.get_metrics())
     
     model_path = os.path.join(args.input,args.model_name)
     model = torch.load(model_path)

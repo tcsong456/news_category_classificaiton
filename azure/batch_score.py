@@ -73,13 +73,10 @@ def main():
     if args.tag_name is not None and args.tag_value is not None:
         tags = [(args.tag_name,args.tag_value)]
     
-#    model = get_model(ws=ws,
-#                      model_name=args.model_name,
-#                      model_version=args.model_version,
-#                      tags=tags)
-    models = Model.list(workspace=ws,
-                            name=args.model_name,
-                            latest=True)
+    models = get_model(ws=ws,
+                       model_name=args.model_name,
+                       model_version=args.model_version,
+                       tags=tags)
     model = models[-1]
     model_path = Model.get_model_path(model_name=model.name,
                                       version=model.version,
