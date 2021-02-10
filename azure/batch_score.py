@@ -10,34 +10,11 @@ nltk.download('punkt')
 from nltk.tokenize import word_tokenize
 import numpy as np
 import pandas as pd
-from azure_utils import use_or_create_datastore
+from azure_utils import use_or_create_datastore,get_model
 import pickle
 import sys
 sys.path.append('py')
 from tokenee import Tokenizer
-
-def get_model(ws,
-              model_name,
-              model_version=None,
-              tags=None):
-    model_version = int(model_version)
-    if model_version >= 0:
-        print('loading from model')
-        model = Model(workspace=ws,
-                      name=model_name,
-                      version=model_version,
-                      tags=tags)
-    else:
-        print('loading from model list')
-        models = Model.list(workspace=ws,
-                            name=model_name,
-                            latest=True)
-        model = models[-1]
-    
-    if model is None:
-        raise FileNotFoundError('model not found')
-    
-    return model
 
 def main():
     parser = argparse.ArgumentParser()

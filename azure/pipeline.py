@@ -141,7 +141,6 @@ def main():
     
     pipeline = Pipeline(workspace=ws,
                         steps=[train_step,register_step,batchscore_step]
-#                        steps=[train_step,register_step]
                         )
     pipeline.publish(name=env.pipeline_name,
                      description='pipline of news category classification',

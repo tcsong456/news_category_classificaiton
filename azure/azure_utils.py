@@ -1,4 +1,4 @@
-from azureml.core import Workspace,Environment,Datastore
+from azureml.core import Workspace,Environment,Datastore,Model
 from azureml.exceptions import WorkspaceException,UserErrorException,ProjectSystemException
 from azureml.core.compute import AmlCompute,ComputeTarget
 from azureml.core.runconfig import DEFAULT_CPU_IMAGE,DEFAULT_GPU_IMAGE
@@ -119,6 +119,29 @@ def use_or_create_datastore(ws,
                                                             account_key=account_key)
     
     return datastore
+
+def get_model(ws,
+              model_name,
+              model_version=None,
+              tags=None):
+    model_version = int(model_version)
+    if model_version >= 0:
+        print('loading from model')
+        model = Model(workspace=ws,
+                      name=model_name,
+                      version=model_version,
+                      tags=tags)
+    else:
+        print('loading from model list')
+        models = Model.list(workspace=ws,
+                            name=model_name,
+                            latest=True)
+        model = models[-1]
+    
+    if model is None:
+        raise FileNotFoundError('model not found')
+    
+    return model
     
     
         
