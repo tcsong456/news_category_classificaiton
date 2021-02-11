@@ -1,6 +1,6 @@
 import sys
 sys.path.append('py')
-sys.path.appned('azure')
+sys.path.append('azure')
 from torch.utils.data import DataLoader
 from torch import nn
 from py.create_corpus import Corpus
