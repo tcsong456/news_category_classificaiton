@@ -38,7 +38,7 @@ def main():
             tags.update({'build_url':env.build_url})
         
     exp = Experiment(workspace=ws,
-                     nam=env.experiment_scoring_name)
+                     name=env.experiment_scoring_name)
     exp.submit(published_pipeline,
                tags=tags,
                pipeline_parameters={
