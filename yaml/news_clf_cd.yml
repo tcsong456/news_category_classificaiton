@@ -12,6 +12,10 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+variables:
+  - group: devops-vg
+  - template: env_template.yml
+
 stages:
   - stage: 'Model_cd'
     displayName: 'Model CD'
