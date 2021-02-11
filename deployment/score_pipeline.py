@@ -76,6 +76,9 @@ def main():
     pipeline.publish(name=env.pipeline_scoring_name,
                      description='news clf scoring pipeline',
                      version=env.build_id)
+
+if __name__ == '__main__':
+    main()
     
     
 
