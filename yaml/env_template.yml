@@ -72,7 +72,7 @@ variables:
   - name: PIPELINE_SCORING_NAME
     value: 'news_clf_scoring_pipeline'
   - name: SERVICE_NAME
-    value: 'news_clf_aciservice'
+    value: 'newsclfaciservice'
   - name: ENVIRONMENT_NAME
     value: news_clf_dependencies
   - name: EXPERIMENT_SCORING_NAME
