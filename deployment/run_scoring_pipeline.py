@@ -24,12 +24,12 @@ def main():
     for pipe in pipeline_list:
         if pipe.name == env.pipeline_scoring_name and pipe.version == env.build_id:
             matched_pipeline.append(pipe)
-    if len(pipeline_list) > 1:
+    if len(matched_pipeline) > 1:
         raise Exception('there should be only one matched pipeline')
-    elif len(pipeline_list) == 0:
+    elif len(matched_pipeline) == 0:
         raise Exception('no pipeline matched')
     else:
-        published_pipeline = pipeline_list[0]
+        published_pipeline = matched_pipeline[0]
     
     tags = {'description':'news category classifiction experiment'}
     if env.build_id is not None:
