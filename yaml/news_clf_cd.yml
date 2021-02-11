@@ -15,7 +15,7 @@ pool:
 stages:
   - stage: 'Model_cd'
     displayName: 'Model CD'
-    varibles: 
+    variables: 
       BUILD_ID: $(BUILD.BUILDID)
       BUILD_URL: $(SYSTEM.COLLECTIONURI)$(SYSTEM.TEAMPROJECT)/_build/results?buildId=$(BUILD.BUILDID)
     jobs:
