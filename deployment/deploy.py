@@ -19,7 +19,7 @@ def parseargs():
 def main():
     args = parseargs()
     run = Run.get_context()
-    ws = run.expriment.workspace
+    ws = run.experiment.workspace
     aci_config = AciWebservice.deploy_configuration()
     model = get_model(ws=ws,
                       model_name=args.model_name,

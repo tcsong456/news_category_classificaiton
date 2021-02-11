@@ -43,18 +43,10 @@ def main():
     except Exception as error:
         print(error)
 
-#%%
-#from azureml.core import Workspace
-#ws = Workspace.get(name='aml-workspace',
-#                   resource_group='aml-resource-group',
-#                   subscription_id='64c727c2-4f98-4ef1-a45f-09eb33c1bd59')
-#datastore = ws.datastores['news_cat_clf']
-#train_corpus = Dataset.Tabular.from_delimited_files(path=(datastore,'corpus/corpus_train.csv')).to_pandas_dataframe()
-#eval_corpus = Dataset.Tabular.from_delimited_files(path=(datastore,'corpus/corpus_eval.csv')).to_pandas_dataframe()
-#corpus = pd.concat([train_corpus,eval_corpus]).sample(frac=0.4).reset_index(drop=True)
-#    
+if __name__ == '__main__':
+    main()
 
-#data = json.loads(json_data)
-#data = pd.DataFrame(data['data'],columns=['label','text'])
+#%%
+
 
     
