@@ -7,6 +7,8 @@ from py.tokenee import Tokenizer
 from azureml.core import Model,Dataset
 from azureml.core.run import Run
 import numpy as np
+import sys
+sys.path.append('py')
 import pandas as pd
 import os
 import torch

@@ -43,3 +43,7 @@ if __name__ == '__main__':
     main()
     
 #%%
+#from azureml.core.webservice import AciWebservice
+#service = AciWebservice(workspace=ws,
+#                        name='newsclfaciservice')
+#service.get_logs()
