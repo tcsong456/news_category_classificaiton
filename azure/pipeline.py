@@ -43,7 +43,7 @@ def main():
                                         account_key=config['account_key'],
                                         use_default=False)
     environment = use_or_create_environment(ws=ws,
-                                            env_name='news_clf_dependencies',
+                                            env_name=env.environment_name,
                                             conda_dependencies='yaml/run_dependencies.yml',
                                             create_new_env=True,
                                             overwrite=True)

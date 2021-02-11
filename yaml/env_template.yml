@@ -69,3 +69,9 @@ variables:
     value: false
   - name: CORPUS_FRAC
     value: 0.4
+  - name: PIPELINE_SCORING_NAME
+    value: 'news_clf_scoring_pipeline'
+  - name: SERVICE_NAME
+    value: 'news_clf_aciservice'
+  - name: ENVIRONMENT_NAME
+    value: news_clf_dependencies

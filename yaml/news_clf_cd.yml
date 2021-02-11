@@ -1,0 +1,49 @@
+resources:
+  containers:
+  - container: mlops
+    image: andysong199086/news_clf:3.0
+
+pr: none
+trigger:
+  branches:
+    include:
+    - main
+
+pool:
+  vmImage: ubuntu-latest
+
+Stages:
+  - stage: 'Model_cd'
+    displayName: 'Model CD'
+    varibles: 
+      BUILD_ID: $(BUILD.BUILDID)
+      BUILD_URL: $(SYSTEM.COLLECTIONURI)$(SYSTEM.TEAMPROJECT)/_build/results?buildId=$(BUILD.BUILDID)
+    jobs:
+    - job: 'build_piepline_cd'
+      displayName: 'Building pipeline cd'
+      container: mlops
+      timeoutInMinutes: 0
+      steps:
+       - task: AzureCLI@1
+         inputs:
+           azureSubscription: '$(WORKSPACE_SVC_CONNECTION)'
+           scriptLocation: inlineScript
+           workingDirectory: $(Build.SourcesDirectory)
+           inlineScript: |
+             set -e
+             export SUBSCRIPTION_ID=$(az account show --query id -o tsv)
+             python deployment/score_pipeline.py
+    - job: 'run_scoring_pipeline'
+      displayName: 'run scoring pipeline'
+      container: mlops
+      timeoutInMinutes: 0
+      steps:
+      - task: AzureCLI@1
+        inputs:
+          azureSubscription: '$(WORKSPACE_SVC_CONNECTION)'
+          scriptLocation: inlineScript
+          workingDirectory: $(Build.SourcesDirectory)
+          inlineScript: |
+           set -e
+           export SUBSCRIPTION_ID=$(az account show --query id -o tsv)
+           python deployment/run_scoring_pipeline.py

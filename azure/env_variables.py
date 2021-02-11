@@ -23,6 +23,8 @@ class ENV:
     pipeline_name: Optional[str] = os.environ.get('PIPELINE_NAME')
     vocab: Optional[str] = os.environ.get('VOCAB')
     experiment_name: Optional[str] = os.environ.get('EXPERIMENT_NAME')
+    experiment_scoring_name: Optional[str] = os.environ.get('EXPERIMENT_SCORING_NAME')
+    environment_name: Optional[str] = os.environ.get('ENVIRONMENT_NAME')
     
     model_name: Optional[str] = os.environ.get('MODEL_NAME')
     model_version: Optional[str] = os.environ.get('MODEL_VERSION')
@@ -42,5 +44,8 @@ class ENV:
     learning_rate: Optional[float] = float(os.environ.get('LEARNING_RATE'))
     epochs: Optional[int] = int(os.environ.get('EPOCHS'))
     corpus_frac: Optional[float] = float(os.environ.get('CORPUS_FRAC'))
+    pipeline_scoring_name: Optional[str] = os.environ.get('PIPELINE_SCORING_NAME')
+    service_name: Optional[str] = os.environ.get('SERVICE_NAME')
+    
     
 #%%

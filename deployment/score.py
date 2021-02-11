@@ -1,3 +1,5 @@
+import sys
+sys.path.append('py')
 from torch.utils.data import DataLoader
 from torch import nn
 from py.create_corpus import Corpus
@@ -36,6 +38,7 @@ def run(data):
                           vocab=vocab)    
     
     raw_data = json.loads(data['data'])
+    raw_data = pd.DataFrame(raw_data,columns=['label','text'])
     dataset = Corpus(corpus=raw_data,
                      tokenizer=tokenizer,
                      cuda='true')
