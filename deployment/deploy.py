@@ -27,7 +27,7 @@ def main():
     environment = use_or_create_environment(ws=ws,
                                             env_name=args.env_name)
     
-    inference_config = InferenceConfig(entry_scrpt='deployment/score.py',
+    inference_config = InferenceConfig(entry_script='deployment/score.py',
                                        environment=environment,
                                        source_directory='.')
     aci_service = Model.deploy(workspace=ws,
