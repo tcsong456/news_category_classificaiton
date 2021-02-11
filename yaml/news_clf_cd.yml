@@ -12,7 +12,7 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-Stages:
+stages:
   - stage: 'Model_cd'
     displayName: 'Model CD'
     varibles: 
@@ -25,6 +25,7 @@ Stages:
       timeoutInMinutes: 0
       steps:
        - task: AzureCLI@1
+         displayName: 'deploy socring pipeline'
          inputs:
            azureSubscription: '$(WORKSPACE_SVC_CONNECTION)'
            scriptLocation: inlineScript
@@ -39,6 +40,7 @@ Stages:
       timeoutInMinutes: 0
       steps:
       - task: AzureCLI@1
+        displayName: 'run scoring pipeline'
         inputs:
           azureSubscription: '$(WORKSPACE_SVC_CONNECTION)'
           scriptLocation: inlineScript
