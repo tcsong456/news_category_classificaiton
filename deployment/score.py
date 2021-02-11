@@ -1,5 +1,3 @@
-import sys
-sys.path.append('py')
 from torch.utils.data import DataLoader
 from torch import nn
 from py.create_corpus import Corpus
@@ -7,8 +5,6 @@ from py.tokenee import Tokenizer
 from azureml.core import Model,Dataset
 from azureml.core.run import Run
 import numpy as np
-import sys
-sys.path.append('py')
 import pandas as pd
 import os
 import torch
@@ -19,9 +15,11 @@ nltk.download('punkt')
 from nltk.tokenize import word_tokenize
 
 def init():
+    import sys
+    sys.path.append('py')
     global model
     model_path = os.environ.get('AZUREML_MODEL_DIR')
-    print(model_path)
+    print(f'MODEL_PATH:{model_path}')
     model_path = Model.get_model_path(model_path.split('/')[-2])
     model = torch.load(model_path)
 
