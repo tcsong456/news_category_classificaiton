@@ -20,7 +20,6 @@ def main():
     
     matched_pipeline = []
     pipeline_list = PublishedPipeline.list(ws)
-    print(pipeline_list)
     for pipe in pipeline_list:
         if pipe.name == env.pipeline_scoring_name and pipe.version == env.build_id:
             matched_pipeline.append(pipe)

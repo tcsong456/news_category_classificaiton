@@ -75,3 +75,5 @@ variables:
     value: 'news_clf_aciservice'
   - name: ENVIRONMENT_NAME
     value: news_clf_dependencies
+  - name: EXPERIMENT_SCORING_NAME
+    value: news_clf_scoring_exp
