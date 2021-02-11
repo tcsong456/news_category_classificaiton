@@ -1,6 +1,7 @@
 import argparse
 import sys
 sys.path.append('azure')
+sys.path.append('py')
 from azure_utils import get_model,use_or_create_environment
 from azureml.core.webservice import AciWebservice
 from azureml.core.model import InferenceConfig,Model
