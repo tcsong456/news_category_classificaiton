@@ -1,9 +1,9 @@
 import sys
 sys.path.append('azure')
 from env_variables import ENV
-from azureml.core import Workspace
+from azureml.core import Workspace,Experiment
 from azureml.core.authentication import ServicePrincipalAuthentication
-from azureml.pipeline.core import PublishedPipeline,Experiment
+from azureml.pipeline.core import PublishedPipeline
 import json
 
 def main():

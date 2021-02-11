@@ -42,6 +42,8 @@ stages:
       displayName: 'run scoring pipeline'
       container: mlops
       timeoutInMinutes: 0
+      dependsOn: 'build_piepline_cd'
+      condition: succeeded()
       steps:
       - task: AzureCLI@1
         displayName: 'run scoring pipeline'
