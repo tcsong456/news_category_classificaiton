@@ -40,7 +40,7 @@ def main():
     train_corpus_param = PipelineParameter('train_corpus',default_value='train_corpus')
     eval_corpus_param = PipelineParameter('eval_corpus',default_value='eval_corpus')
     frac_param = PipelineParameter('frac',default_value=0.4)
-    datastore_name_param = PipelineParameter('datastore_name',default_valule='news_cat_clf')
+    datastore_name_param = PipelineParameter('datastore_name',default_value='news_cat_clf')
     
     deploy_step = PythonScriptStep(name='deploy_step',
                                    script_name='deployment/deploy.py',
