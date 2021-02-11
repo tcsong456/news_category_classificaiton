@@ -44,7 +44,7 @@ def main():
                                     'model_name':env.model_name,
                                     'model_version':env.model_version,
                                     'service_name':env.service_name,
-                                    'env_name':env.experiment_name,
+                                    'env_name':env.environment_name,
                                     'train_corpus':'corpus/corpus_train.csv',
                                     'eval_corpus':'corpus/corpus_eval.csv',
                                     'frac':env.corpus_frac,
