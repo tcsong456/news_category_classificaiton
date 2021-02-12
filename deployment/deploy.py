@@ -35,7 +35,8 @@ def main():
     try:
         aks_compute = AksCompute(workspace=ws,
                                  name=args.service_name)
-    except ComputeTargetException:
+#    except ComputeTargetException:
+    except:
         aks_compute_config = AksCompute.provisioning_configuration(vm_size=args.vm_size,
                                                                    cluster_purpose='news_clf')
         aks_compute = ComputeTarget.create(workspace=ws,
@@ -63,7 +64,14 @@ if __name__ == '__main__':
 #%%
 #from azureml.core import Workspace
 #from azureml.core.webservice import AksWebservice
-#ws = Workspace.get(name='aml-workspace',
-#                   resource_group='aml-resource-group',
-#                   subscription_id='64c727c2-4f98-4ef1-a45f-09eb33c1bd59')
-#aks_config = AksWebservice(ws,name=
+#from azureml.core.compute import AksCompute
+#from azureml.exceptions import ComputeTargetException
+##ws = Workspace.get(name='aml-workspace',
+##                   resource_group='aml-resource-group',
+##                   subscription_id='64c727c2-4f98-4ef1-a45f-09eb33c1bd59')
+##aks_config = AksWebservice(ws,name=
+#try:
+#    aks_compute = AksCompute(workspace=ws,
+#                             name='newsclfaciservice')
+#except ComputeTargetException:
+#    print('wrong!')
