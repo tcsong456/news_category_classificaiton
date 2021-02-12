@@ -28,9 +28,9 @@ def main():
     environment = use_or_create_environment(ws=ws,
                                             env_name=args.env_name)
     
-    inference_config = InferenceConfig(entry_script='score.py',
+    inference_config = InferenceConfig(entry_script='deployment/score.py',
                                        environment=environment,
-                                       source_directory='deployment')
+                                       source_directory='.')
     aci_service = Model.deploy(workspace=ws,
                                name=args.service_name,
                                models=[model],
@@ -45,6 +45,10 @@ if __name__ == '__main__':
     
 #%%
 #from azureml.core.webservice import AciWebservice
+#from azureml.core import Workspace
+#ws = Workspace.get(name='aml-workspace',
+#                   resource_group='aml-resource-group',
+#                   subscription_id='64c727c2-4f98-4ef1-a45f-09eb33c1bd59')
 #service = AciWebservice(workspace=ws,
 #                        name='newsclfaciservice')
 #service.get_logs()

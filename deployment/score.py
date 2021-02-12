@@ -1,5 +1,5 @@
 import sys
-sys.path.append('py')
+sys.path.append('../py')
 from torch.utils.data import DataLoader
 from torch import nn
 from py.create_corpus import Corpus
@@ -21,6 +21,7 @@ def init():
     model_path = os.environ.get('AZUREML_MODEL_DIR')
     print(f'MODEL_PATH:{model_path}')
     model_path = Model.get_model_path(model_path.split('/')[-2])
+    print(model_path)
 #    model = torch.load(model_path)
     
     run = Run.get_context()
