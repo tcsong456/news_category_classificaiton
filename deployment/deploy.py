@@ -1,6 +1,5 @@
 import argparse
 import sys
-sys.path.append('azure')
 sys.path.append('py')
 from azure_utils import get_model,use_or_create_environment
 from azureml.core.webservice import AksWebservice
@@ -35,10 +34,8 @@ def main():
     try:
         aks_compute = AksCompute(workspace=ws,
                                  name=args.service_name)
-#    except ComputeTargetException:
-    except:
-        aks_compute_config = AksCompute.provisioning_configuration(vm_size=args.vm_size,
-                                                                   cluster_purpose='news_clf')
+    except ComputeTargetException:
+        aks_compute_config = AksCompute.provisioning_configuration(vm_size=args.vm_size)
         aks_compute = ComputeTarget.create(workspace=ws,
                                            name=args.service_name,
                                            provisioning_configuration=aks_compute_config)
@@ -75,3 +72,5 @@ if __name__ == '__main__':
 #                             name='newsclfaciservice')
 #except ComputeTargetException:
 #    print('wrong!')
+
+#%%
