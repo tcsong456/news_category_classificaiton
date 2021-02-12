@@ -27,7 +27,6 @@ def main():
     model = get_model(ws=ws,
                       model_name=args.model_name,
                       model_version=args.model_version)
-    print(model)
     
     environment = use_or_create_environment(ws=ws,
                                             env_name=args.env_name)
@@ -40,10 +39,9 @@ def main():
                                                                     vm_size=args.vm_size,
     #                                                                cluster_purpose='DevTest'
                                                                     )
-        print(aks_compute_config)
-#        aks_compute = ComputeTarget.create(workspace=ws,
-#                                           name=args.service_name,
-#                                           provisioning_configuration=aks_compute_config)
+        aks_compute = ComputeTarget.create(workspace=ws,
+                                           name=args.service_name,
+                                           provisioning_configuration=aks_compute_config)
 #        aks_compute.wait_for_completion(show_output=True)
 #        
 #    inference_config = InferenceConfig(entry_script='deployment/score.py',
