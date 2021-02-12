@@ -61,3 +61,11 @@ if __name__ == '__main__':
     main()
 
 #%%
+#dc = {'a':1,'b':3,'c':5,'d':7,'e':9}
+#def power(input):
+#    return input**2
+#def trail(dc):
+#    for key,value in dc.items():
+#        yield(power(value))
+#for v in trail(dc):
+#    print(v+3)

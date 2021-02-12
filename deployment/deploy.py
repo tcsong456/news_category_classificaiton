@@ -31,18 +31,18 @@ def main():
     environment = use_or_create_environment(ws=ws,
                                             env_name=args.env_name)
     
-    try:
-        aks_compute = AksCompute(workspace=ws,
-                                 name=args.service_name)
-    except ComputeTargetException:
-        aks_compute_config = AksCompute.provisioning_configuration(
-#                                                                    vm_size=args.vm_size,
-                                                                    cluster_purpose='DevTest'
-                                                                    )
-        aks_compute = ComputeTarget.create(workspace=ws,
-                                           name=args.service_name,
-                                           provisioning_configuration=aks_compute_config)
-        aks_compute.wait_for_completion(show_output=True)
+#    try:
+#        aks_compute = AksCompute(workspace=ws,
+#                                 name=args.service_name)
+#    except ComputeTargetException:
+    aks_compute_config = AksCompute.provisioning_configuration(
+                                                                vm_size=args.vm_size,
+#                                                                cluster_purpose='DevTest'
+                                                                )
+    aks_compute = ComputeTarget.create(workspace=ws,
+                                       name=args.service_name,
+                                       provisioning_configuration=aks_compute_config)
+    aks_compute.wait_for_completion(show_output=True)
     
     inference_config = InferenceConfig(entry_script='deployment/score.py',
                                        environment=environment,
