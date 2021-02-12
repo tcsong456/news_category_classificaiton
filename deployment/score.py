@@ -2,8 +2,8 @@ import sys
 sys.path.append('../py')
 from torch.utils.data import DataLoader
 from torch import nn
-from py.create_corpus import Corpus
-from py.tokenee import Tokenizer
+from create_corpus import Corpus
+from tokenee import Tokenizer
 from azureml.core import Model,Dataset
 from azureml.core.run import Run
 import numpy as np
@@ -21,14 +21,7 @@ def init():
     model_path = os.environ.get('AZUREML_MODEL_DIR')
     print(f'MODEL_PATH:{model_path}')
     model_path = Model.get_model_path(model_path.split('/')[-2])
-    print(model_path)
-#    model = torch.load(model_path)
-    
-    run = Run.get_context()
-    ws = run.experiment.workspace
-    datastore = ws.datastores['news_cat_clf']
-    corpus = Dataset.File.from_files(path=(datastore,'corpus/corpus_train.csv'))
-    print(corpus)
+    model = torch.load(model_path)
     
     from py.model import LSTMClassifier
     
@@ -47,7 +40,7 @@ def run(data):
                           vocab=vocab)    
     
     raw_data = json.loads(data['data'])
-    raw_data = pd.DataFrame(raw_data,columns=['label','text'])
+    raw_data = pd.DataFrame(raw_data,columns=['label','text'])  
     dataset = Corpus(corpus=raw_data,
                      tokenizer=tokenizer,
                      cuda='true')

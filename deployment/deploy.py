@@ -45,10 +45,13 @@ if __name__ == '__main__':
     
 #%%
 #from azureml.core.webservice import AciWebservice
-#from azureml.core import Workspace
+from azureml.core import Workspace,Model
 #ws = Workspace.get(name='aml-workspace',
 #                   resource_group='aml-resource-group',
 #                   subscription_id='64c727c2-4f98-4ef1-a45f-09eb33c1bd59')
+    
 #service = AciWebservice(workspace=ws,
 #                        name='newsclfaciservice')
 #service.get_logs()
+#model_path = Model.get_model_path('news_clf_model.pt',
+#                                  _workspace=ws)
