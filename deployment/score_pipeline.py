@@ -82,7 +82,9 @@ def main():
     test_step.run_after(deploy_step)
     
     pipeline = Pipeline(workspace=ws,
-                        steps=[deploy_step,test_step])
+#                        steps=[deploy_step,test_step]
+                        steps=[deploy_step]
+                        )
     pipeline.publish(name=env.pipeline_scoring_name,
                      description='news clf scoring pipeline',
                      version=env.build_id)
