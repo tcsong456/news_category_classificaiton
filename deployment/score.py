@@ -1,9 +1,7 @@
-import sys
-sys.path.append('../py')
 from torch.utils.data import DataLoader
 from torch import nn
-from create_corpus import Corpus
-from tokenee import Tokenizer
+from py.create_corpus import Corpus
+from py.tokenee import Tokenizer
 from azureml.core import Model,Dataset
 from azureml.core.run import Run
 import numpy as np
@@ -22,8 +20,6 @@ def init():
     print(f'MODEL_PATH:{model_path}')
     model_path = Model.get_model_path(model_path.split('/')[-2])
     model = torch.load(model_path)
-    
-    from py.model import LSTMClassifier
     
 def run(data):
     batch_size = 64

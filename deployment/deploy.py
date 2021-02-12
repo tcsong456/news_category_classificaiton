@@ -45,7 +45,7 @@ if __name__ == '__main__':
     
 #%%
 #from azureml.core.webservice import AciWebservice
-from azureml.core import Workspace,Model
+#from azureml.core import Workspace,Model
 #ws = Workspace.get(name='aml-workspace',
 #                   resource_group='aml-resource-group',
 #                   subscription_id='64c727c2-4f98-4ef1-a45f-09eb33c1bd59')
