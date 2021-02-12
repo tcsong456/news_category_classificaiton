@@ -45,7 +45,7 @@ def main():
     max_len_param = PipelineParameter('max_len',default_value=32)
     batch_size_param = PipelineParameter('batch_size',default_value=64)
     cuda_param = PipelineParameter('cuda',default_value='true')
-    vm_size_param = PipelineParameter('vm_size_scoring',default='STANDARD_NC6')
+    vm_size_param = PipelineParameter('vm_size_scoring',default_value='STANDARD_NC6')
     
     deploy_step = PythonScriptStep(name='deploy_step',
                                    script_name='deployment/deploy.py',
