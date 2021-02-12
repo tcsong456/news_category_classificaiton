@@ -41,6 +41,11 @@ def main():
     eval_corpus_param = PipelineParameter('eval_corpus',default_value='eval_corpus')
     frac_param = PipelineParameter('frac',default_value=0.4)
     datastore_name_param = PipelineParameter('datastore_name',default_value='news_cat_clf')
+    is_sentence_param = PipelineParameter('is_sentence',default_value='false')
+    max_len_param = PipelineParameter('max_len',default_value=32)
+    batch_size_param = PipelineParameter('batch_size',default_value=64)
+    cuda_param = PipelineParameter('cuda',default_value='true')
+    vm_size_param = PipelineParameter('vm_size_scoring',default='STANDARD_NC6')
     
     deploy_step = PythonScriptStep(name='deploy_step',
                                    script_name='deployment/deploy.py',
@@ -48,7 +53,8 @@ def main():
                                    arguments=['--model_name',model_name_param,
                                               '--model_version',model_version_param,
                                               '--service_name',service_name_param,
-                                              '--env_name',env_name_param],
+                                              '--env_name',env_name_param,
+                                              '--vm_size',vm_size_param],
                                    runconfig=runconfig,
                                    compute_target=gpu_compute_target,
                                    allow_reuse=False)
@@ -63,7 +69,11 @@ def main():
                                               '--train_corpus',train_corpus_param,
                                               '--eval_corpus',eval_corpus_param,
                                               '--frac',frac_param,
-                                              '--datastore_name',datastore_name_param
+                                              '--datastore_name',datastore_name_param,
+                                              '--is_sentence',is_sentence_param,
+                                              '--max_seq_len',max_len_param,
+                                              '--eval_batch_size',batch_size_param,
+                                              '--cuda',cuda_param
                                               ],
                                    runconfig=runconfig,
                                    compute_target=gpu_compute_target,

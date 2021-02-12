@@ -48,7 +48,12 @@ def main():
                                     'train_corpus':'corpus/corpus_train.csv',
                                     'eval_corpus':'corpus/corpus_eval.csv',
                                     'frac':env.corpus_frac,
-                                    'datastore_name':env.datastore_name
+                                    'datastore_name':env.datastore_name,
+                                    'is_sentence':env.is_sentence,
+                                    'max_len':env.max_seq_len,
+                                    'batch_size':env.batch_size_eval_scoring,
+                                    'cuda':env.cuda,
+                                    'vm_size_scoring':env.vm_size_scoring
                                      })
     print(f'pipeline {env.pipeline_scoring_name} has been built')
 

@@ -39,6 +39,8 @@ variables:
     value: 64
   - name: BATCH_SIZE_EVAL
     value: 64
+  - name: BATCH_SIZE_EVAL_SCORING
+    value: 128
   - name: TOKENIZER
     value: treebank
   - name: IS_SENTENCE
@@ -77,3 +79,5 @@ variables:
     value: news_clf_dependencies
   - name: EXPERIMENT_SCORING_NAME
     value: news_clf_scoring_exp
+  - name: VM_SIZE_SCORING
+    value: STANDARD_NC6

@@ -36,7 +36,8 @@ def main():
         aks_compute = AksCompute(workspace=ws,
                                  name=args.service_name)
     except ComputeTargetException:
-        aks_compute_config = AksCompute.provisioning_configuration(vm_size=args.vm_size)
+        aks_compute_config = AksCompute.provisioning_configuration(vm_size=args.vm_size,
+                                                                   cluster_purpose='news_clf')
         aks_compute = ComputeTarget.create(workspace=ws,
                                            name=args.service_name,
                                            provisioning_configuration=aks_compute_config)
@@ -60,11 +61,9 @@ if __name__ == '__main__':
     main()
     
 #%%
-    n_rounds = np.ceil(len(input) / size).astype(int)
-    with torch.no_grad():
-        for i in range(n_rounds):
-            if i < n_rounds - 1:
-                pred = model(input[size*i:size*(i+1)])
-            else:
-                pred = model(input[size*i:])
-            preds.append(np.argmax(pred.cpu().numpy(),axis=1))
+#from azureml.core import Workspace
+#from azureml.core.webservice import AksWebservice
+#ws = Workspace.get(name='aml-workspace',
+#                   resource_group='aml-resource-group',
+#                   subscription_id='64c727c2-4f98-4ef1-a45f-09eb33c1bd59')
+#aks_config = AksWebservice(ws,name=
