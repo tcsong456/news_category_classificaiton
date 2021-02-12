@@ -1,6 +1,6 @@
 import argparse
 import sys
-sys.path.append('py')
+sys.path.append('azure')
 from azure_utils import get_model,use_or_create_environment
 from azureml.core.webservice import AksWebservice
 from azureml.core.compute import AksCompute,ComputeTarget
