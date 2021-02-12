@@ -21,8 +21,16 @@ def init():
     model_path = os.environ.get('AZUREML_MODEL_DIR')
     print(f'MODEL_PATH:{model_path}')
     model_path = Model.get_model_path(model_path.split('/')[-2])
-    model = torch.load(model_path)
-
+#    model = torch.load(model_path)
+    
+    run = Run.get_context()
+    ws = run.experiment.workspace
+    datastore = ws.datastores['news_cat_clf']
+    corpus = Dataset.File.from_files(path=(datastore,'corpus/corpus_train.csv'))
+    print(corpus)
+    
+    from py.model import LSTMClassifier
+    
 def run(data):
     batch_size = 64
     run = Run.get_context()
