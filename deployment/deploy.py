@@ -28,7 +28,7 @@ def main():
                       model_version=env.model_version)
     
     environment = use_or_create_environment(ws=ws,
-                                            env_name=env.experiment_name)
+                                            env_name=env.environment_name)
     
     try:
         aks_compute = AksCompute(workspace=ws,
