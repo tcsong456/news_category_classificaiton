@@ -16,7 +16,7 @@ def run(data):
     raw_data = torch.tensor(raw_data,dtype=torch.long)
     preds = []
     batch_size = 128
-    n_rounds = np.ceil(len(raw_data) / batch_size)
+    n_rounds = np.ceil(len(raw_data) / batch_size).astype(int)
     for i in range(n_rounds):
         if i < n_rounds - 1:
             data = raw_data[i*batch_size:(i+1)*batch_size]

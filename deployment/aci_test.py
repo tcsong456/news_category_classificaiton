@@ -93,13 +93,10 @@ if __name__ == '__main__':
     main()
 
 #%%
-#class A:
-#    def __init__(self):
-#        self.a = 1
-#        self.b = 2
-#    
-#    def power(self):
-#        self.l[0] = 5
-#a = A()
-#a.m = [1,2,3,4,5]
-#a.m
+#f = open('corpus/corpus_train.txt','r')
+#from itertools import islice
+#i =0 
+#for line in islice(f,100):
+#    print(line)
+#    i += 1
+#print(i)
