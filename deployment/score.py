@@ -27,5 +27,5 @@ def run(data):
         pred = model(data)
         pred = pred.cpu().data.numpy()
         preds.append(np.argmax(pred,axis=1).tolist())
-    
+    print(f'score preds:{preds}')
     return preds

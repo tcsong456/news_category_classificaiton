@@ -87,9 +87,9 @@ if __name__ == '__main__':
 #    print('wrong!')
 ##
 #%%
-#service = AksWebservice(workspace=ws,
-#                        name='news-aks-service')
-#service.get_logs()
+service = AksWebservice(workspace=ws,
+                        name='news-aks-service')
+service.get_logs()
 #env = Environment.list(ws)
 #env['news_clf_dependencies']
 #aks_compute

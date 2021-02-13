@@ -70,6 +70,7 @@ def main():
         loss_fn = nn.NLLLoss()
         preds = aks_service.run(json_data)
         preds = np.concatenate(preds)
+        print(f'aci_test preds:{preds}')
         losses = loss_fn(preds,targets)
         accs = (preds == targets).sum()
         avg_loss,avg_acc = round(losses/len(preds),5),round(accs/len(preds),3)
