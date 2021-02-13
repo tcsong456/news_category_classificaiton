@@ -74,7 +74,7 @@ variables:
   - name: ENVIRONMENT_NAME
     value: news_clf_dependencies
   - name: AKS_SERVICE_NAME
-    value: news_aks_service
+    value: news-aks-service
   - name: TRAIN_CORPUS
     value: corpus/corpus_train.csv
   - name: EVAL_CORPUS
