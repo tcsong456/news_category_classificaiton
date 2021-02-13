@@ -79,7 +79,7 @@ def use_or_create_environment(ws,
     if env_name in env_list and not overwrite:
         environment = env_list[env_name]
         return environment
-    elif (create_new_env and conda_dependencies is not None) or overwrite:
+    elif create_new_env or (overwrite and conda_dependencies is not None):
         environment = Environment.from_conda_specification(name=env_name,
                                                            file_path=conda_dependencies)
     else:

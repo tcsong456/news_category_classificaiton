@@ -44,7 +44,7 @@ def main():
                                         use_default=False)
     environment = use_or_create_environment(ws=ws,
                                             env_name=env.environment_name,
-                                            conda_dependencies='yaml/run_dependencies.yml',
+                                            conda_dependencies=env.conda_denpendencies,
                                             create_new_env=True,
                                             overwrite=True)
     

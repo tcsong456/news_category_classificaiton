@@ -28,7 +28,9 @@ def main():
                       model_version=env.model_version)
     
     environment = use_or_create_environment(ws=ws,
-                                            env_name=env.environment_name)
+                                            env_name=env.environment_name,
+                                            conda_dependencies=env.conda_denpendencies,
+                                            overwrite=True)
     
     create_new_akscompute = False
     try:
@@ -68,27 +70,22 @@ if __name__ == '__main__':
     main()
     
 #%%
-from azureml.core import Workspace
-from azureml.core.webservice import AksWebservice
-from azureml.core.compute import AksCompute
-from azureml.exceptions import ComputeTargetException
-ws = Workspace.get(name='aml-workspace',
-                   resource_group='aml-resource-group',
-                   subscription_id='64c727c2-4f98-4ef1-a45f-09eb33c1bd59')
-try:
-    aks_compute = AksCompute(workspace=ws,
-                             name='news-aks-service')
-except ComputeTargetException:
-    print('wrong!')
-##
-#%%
+#from azureml.core import Workspace,Environment
+#from azureml.core.webservice import AksWebservice
+#from azureml.core.compute import AksCompute
+#from azureml.exceptions import ComputeTargetException
+#ws = Workspace.get(name='aml-workspace',
+#                   resource_group='aml-resource-group',
+#                   subscription_id='64c727c2-4f98-4ef1-a45f-09eb33c1bd59')
 #try:
 #    aks_compute = AksCompute(workspace=ws,
-#                             name='newsclfaksservice')
+#                             name='news-aks-service')
 #except ComputeTargetException:
-#    aks_compute_config = AksCompute.provisioning_configuration(vm_size='STANDARD_NC6')
-#    aks_compute = ComputeTarget.create(workspace=ws,
-#                                       name='abc',
-#                                       provisioning_configuration=aks_compute_config)
-#    aks_compute.wait_for_completion(show_output=True)
-aks_compute.provisioning_state.lower()
+#    print('wrong!')
+##
+#%%
+#service = AksWebservice(workspace=ws,
+#                        name='news-aks-service')
+#service.get_logs()
+#env = Environment.list(ws)
+#env['news_clf_dependencies']

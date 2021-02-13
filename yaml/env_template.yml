@@ -85,3 +85,5 @@ variables:
     value: 128
   - name: SCORING_VM_SIZE
     value: STANDARD_NC6
+  - name: CONDA_DEPENDENCIES
+    value: yaml/run_dependencies.yml
