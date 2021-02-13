@@ -23,13 +23,13 @@ stages:
       BUILD_ID: $(BUILD.BUILDID)
       BUILD_URL: $(SYSTEM.COLLECTIONURI)$(SYSTEM.TEAMPROJECT)/_build/results?buildId=$(BUILD.BUILDID)
     jobs:
-    - job: 'build_piepline_cd'
-      displayName: 'Building pipeline cd'
+    - job: 'deployment'
+      displayName: 'deployment cd'
       container: mlops
       timeoutInMinutes: 0
       steps:
        - task: AzureCLI@1
-         displayName: 'deploy socring pipeline'
+         displayName: 'deploy aks service'
          inputs:
            azureSubscription: '$(WORKSPACE_SVC_CONNECTION)'
            scriptLocation: inlineScript
@@ -37,21 +37,21 @@ stages:
            inlineScript: |
              set -e
              export SUBSCRIPTION_ID=$(az account show --query id -o tsv)
-             python deployment/score_pipeline.py
-    - job: 'run_scoring_pipeline'
-      displayName: 'run scoring pipeline'
+             python deployment/deploy.py
+    - job: 'aks_test'
+      displayName: 'aks test'
       container: mlops
       timeoutInMinutes: 0
-      dependsOn: 'build_piepline_cd'
+      dependsOn: 'deployment'
       condition: succeeded()
       steps:
       - task: AzureCLI@1
-        displayName: 'run scoring pipeline'
+        displayName: 'testing deployed aks'
         inputs:
           azureSubscription: '$(WORKSPACE_SVC_CONNECTION)'
           scriptLocation: inlineScript
           workingDirectory: $(Build.SourcesDirectory)
           inlineScript: |
-           set -e
-           export SUBSCRIPTION_ID=$(az account show --query id -o tsv)
-           python deployment/run_scoring_pipeline.py
+            set -e
+            export SUBSCRIPTION_ID=$(az account show --query id -o tsv)
+            python deployment/aci_test.py

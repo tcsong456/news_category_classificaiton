@@ -43,11 +43,11 @@ def main():
                                     'batch_train':env.batch_size_train,
                                     'batch_eval':env.batch_size_eval,
                                     'tokenizer':env.tokenizer,
-                                    'vocab':'corpus/vocab_train.pkl',
+                                    'vocab':env.vocab_path,
                                     'is_sentence':env.is_sentence,
                                     'max_seq_len':env.max_seq_len,
-                                    'train_corpus':'corpus/corpus_train.csv',
-                                    'eval_corpus':'corpus/corpus_eval.csv',
+                                    'train_corpus':env.train_corpus,
+                                    'eval_corpus':env.eval_corpus,
                                     'mode':env.model_mode,
                                     'hidden_size':env.hidden_size,
                                     'num_layers':env.num_layers,
@@ -59,7 +59,6 @@ def main():
                                     'epochs':env.epochs,
                                     'corpus_frac':env.corpus_frac,
                                     'datastore_name':env.datastore_name,
-                                    'batchscore_dataset':'corpus/corpus_eval.csv'
                                     })
     print(f'{env.pipeline_name} has been submitted!')
 

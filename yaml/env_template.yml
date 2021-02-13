@@ -71,13 +71,17 @@ variables:
     value: false
   - name: CORPUS_FRAC
     value: 0.4
-  - name: PIPELINE_SCORING_NAME
-    value: 'news_clf_scoring_pipeline'
-  - name: SERVICE_NAME
-    value: 'newsclfaksservice'
   - name: ENVIRONMENT_NAME
     value: news_clf_dependencies
-  - name: EXPERIMENT_SCORING_NAME
-    value: news_clf_scoring_exp
-  - name: VM_SIZE_SCORING
+  - name: AKS_SERVICE_NAME
+    value: news_aks_service
+  - name: TRAIN_CORPUS
+    value: corpus/corpus_train.csv
+  - name: EVAL_CORPUS
+    value: corpus/corpus_eval.csv
+  - name: VOCAB_PATH
+    value: corpus/vocab_train.pkl
+  - name: SCORING_BATCH_SIZE
+    value: 128
+  - name: SCORING_VM_SIZE
     value: STANDARD_NC6

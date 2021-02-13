@@ -1,6 +1,6 @@
-import argparse
 import sys
 sys.path.append('azure')
+from env_variables import ENV
 from azure_utils import get_model,use_or_create_environment
 from azureml.core.webservice import AksWebservice
 from azureml.core.compute import AksCompute,ComputeTarget
@@ -8,55 +8,43 @@ from azureml.core.model import InferenceConfig,Model
 from azureml.core.run import Run
 from azureml.exceptions import ComputeTargetException
 
-def parseargs():
-    parser = argparse.ArgumentParser()
-    arg = parser.add_argument
-    arg('--model_name',type=str)
-    arg('--model_version',type=str)
-    arg('--service_name',type=str)
-    arg('--env_name',type=str)
-    arg('--vm_size',type=str)
-    args = parser.parse_args()
-    return args
-
 def main():
-    args = parseargs()
+    env = ENV()
     run = Run.get_context()
     ws = run.experiment.workspace
 
     model = get_model(ws=ws,
-                      model_name=args.model_name,
-                      model_version=args.model_version)
+                      model_name=env.model_name,
+                      model_version=env.model_version)
     
     environment = use_or_create_environment(ws=ws,
-                                            env_name=args.env_name)
+                                            env_name=env.experiment_name)
     
     try:
         aks_compute = AksCompute(workspace=ws,
-                                 name=args.service_name)
+                                 name=env.aks_service_name)
     except ComputeTargetException:
         aks_compute_config = AksCompute.provisioning_configuration(
-                                                                    vm_size=args.vm_size,
-    #                                                                cluster_purpose='DevTest'
+                                                                    vm_size=env.scoring_vm_size
                                                                     )
         aks_compute = ComputeTarget.create(workspace=ws,
-                                           name=args.service_name,
+                                           name=env.AKS_SERVICE_NAME,
                                            provisioning_configuration=aks_compute_config)
-#        aks_compute.wait_for_completion(show_output=True)
-#        
-#    inference_config = InferenceConfig(entry_script='deployment/score.py',
-#                                       environment=environment,
-#                                       source_directory='.')
-#    aks_config = AksWebservice.deploy_configuration()
-#    aks_service = Model.deploy(workspace=ws,
-#                               name=args.service_name,
-#                               models=[model],
-#                               inference_config=inference_config,
-#                               deployment_config=aks_config,
-#                               deployment_target=aks_compute,
-#                               overwrite=True)
-#    aks_service.wait_for_deployment(show_output=True)    
-#    print(aks_service.state)
+        aks_compute.wait_for_completion(show_output=True)
+        
+    inference_config = InferenceConfig(entry_script='deployment/score.py',
+                                       environment=environment,
+                                       source_directory='.')
+    aks_config = AksWebservice.deploy_configuration()
+    aks_service = Model.deploy(workspace=ws,
+                               name=env.AKS_SERVICE_NAME,
+                               models=[model],
+                               inference_config=inference_config,
+                               deployment_config=aks_config,
+                               deployment_target=aks_compute,
+                               overwrite=True)
+    aks_service.wait_for_deployment(show_output=True)    
+    print(aks_service.state)
 
 if __name__ == '__main__':
     main()
