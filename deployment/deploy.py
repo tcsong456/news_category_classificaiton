@@ -30,9 +30,10 @@ def main():
     environment = use_or_create_environment(ws=ws,
                                             env_name=env.scoring_environment_name,
                                             conda_dependencies=env.conda_denpendencies,
-                                            overwrite=True,
+                                            overwrite=False,
                                             enable_docker=True,
-                                            use_gpu=True)
+                                            use_gpu=True,
+                                            create_new_env=True)
     
     create_new_akscompute = False
     try:
