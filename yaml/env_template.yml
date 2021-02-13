@@ -73,6 +73,8 @@ variables:
     value: 0.4
   - name: ENVIRONMENT_NAME
     value: news_clf_dependencies
+  - name: SCORING_ENVIRONMENT_NAME
+    value: news_clf_scoring_env
   - name: AKS_SERVICE_NAME
     value: news-aks-service
   - name: TRAIN_CORPUS

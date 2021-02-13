@@ -29,6 +29,7 @@ class ENV:
     vocab_path: Optional[str] = os.environ.get('VOCAB_PATH')
     scoring_batch_size: Optional[int] = int(os.environ.get('SCORING_BATCH_SIZE'))
     conda_denpendencies: Optional[str] = os.environ.get('CONDA_DEPENDENCIES')
+    scoring_environment_name: Optional[str] = os.environ.get('SCORING_ENVIRONMENT_NAME')
     
     model_name: Optional[str] = os.environ.get('MODEL_NAME')
     model_version: Optional[str] = os.environ.get('MODEL_VERSION')

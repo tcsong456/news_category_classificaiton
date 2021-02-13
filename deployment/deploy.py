@@ -28,9 +28,11 @@ def main():
                       model_version=env.model_version)
     
     environment = use_or_create_environment(ws=ws,
-                                            env_name=env.environment_name,
+                                            env_name=env.scoring_environment_name,
                                             conda_dependencies=env.conda_denpendencies,
-                                            overwrite=True)
+                                            overwrite=True,
+                                            enable_docker=True,
+                                            use_gpu=True)
     
     create_new_akscompute = False
     try:
@@ -43,8 +45,8 @@ def main():
     
     if create_new_akscompute:
         aks_compute_config = AksCompute.provisioning_configuration(
-#                                                                    vm_size=env.gpu_vm_size_scoring,
-#                                                                    agent_count=1,
+                                                                    vm_size=env.gpu_vm_size_scoring,
+                                                                    agent_count=1,
                                                                     cluster_purpose='DevTest'
                                                                     )
         aks_compute = ComputeTarget.create(workspace=ws,
