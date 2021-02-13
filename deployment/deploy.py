@@ -30,10 +30,16 @@ def main():
     environment = use_or_create_environment(ws=ws,
                                             env_name=env.environment_name)
     
+    create_new_akscompute = False
     try:
         aks_compute = AksCompute(workspace=ws,
                                  name=env.aks_service_name)
+        if aks_compute.provisioning_state.lower() == 'failed':
+            create_new_akscompute = True
     except ComputeTargetException:
+        create_new_akscompute = True
+    
+    if create_new_akscompute:
         aks_compute_config = AksCompute.provisioning_configuration(
                                                                     vm_size=env.scoring_vm_size,
                                                                     agent_count=1
@@ -61,19 +67,18 @@ if __name__ == '__main__':
     main()
     
 #%%
-#from azureml.core import Workspace
-#from azureml.core.webservice import AksWebservice
-#from azureml.core.compute import AksCompute
-#from azureml.exceptions import ComputeTargetException
-##ws = Workspace.get(name='aml-workspace',
-##                   resource_group='aml-resource-group',
-##                   subscription_id='64c727c2-4f98-4ef1-a45f-09eb33c1bd59')
-##aks_config = AksWebservice(ws,name=
-#try:
-#    aks_compute = AksCompute(workspace=ws,
-#                             name='newsclfaciservice')
-#except ComputeTargetException:
-#    print('wrong!')
+from azureml.core import Workspace
+from azureml.core.webservice import AksWebservice
+from azureml.core.compute import AksCompute
+from azureml.exceptions import ComputeTargetException
+ws = Workspace.get(name='aml-workspace',
+                   resource_group='aml-resource-group',
+                   subscription_id='64c727c2-4f98-4ef1-a45f-09eb33c1bd59')
+try:
+    aks_compute = AksCompute(workspace=ws,
+                             name='news-aks-service')
+except ComputeTargetException:
+    print('wrong!')
 ##
 #%%
 #try:
@@ -85,3 +90,4 @@ if __name__ == '__main__':
 #                                       name='abc',
 #                                       provisioning_configuration=aks_compute_config)
 #    aks_compute.wait_for_completion(show_output=True)
+aks_compute.provisioning_state.lower()
