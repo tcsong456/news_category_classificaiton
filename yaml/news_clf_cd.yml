@@ -2,6 +2,13 @@ resources:
   containers:
   - container: mlops
     image: andysong199086/news_clf:3.0
+  pipelines:
+  - pipeline: news-clf-model-train
+    source: news_clf_ci
+    trigger:
+      branches:
+        include:
+          - main
 
 pr: none
 trigger:
