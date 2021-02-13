@@ -54,7 +54,7 @@ def main():
     for text,target in dataloader:
         texts.append(text)
         targets.append(target)
-    texts = np.concatenate(texts).astype(np.int32)
+    texts = np.concatenate(texts)
     targets = np.concatenate(targets)
 
     df = []
