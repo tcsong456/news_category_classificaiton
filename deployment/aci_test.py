@@ -5,12 +5,13 @@ import pickle
 import pandas as pd
 import numpy as np
 from azureml.core.webservice import AciWebservice
-from azureml.core.run import Run
+from azureml.core.authentication import ServicePrincipalAuthentication
 from azureml.core import Dataset
 from py.create_corpus import Corpus
 from py.tokenee import Tokenizer
 from torch.utils.data import DataLoader
 from env_variables import ENV
+from azure_utils import use_or_create_workspace
 from torch import nn
 import nltk
 nltk.download('punkt')
@@ -19,8 +20,16 @@ from nltk.tokenize import word_tokenize
 def main():
     env = ENV()
     size = env.scoring_batch_size
-    run = Run.get_context()
-    ws = run.experiment.workspace
+    with open('config.json','r') as f:
+        config = json.load(f)        
+    auth = ServicePrincipalAuthentication(tenant_id=config['tenant_id'],
+                                          service_principal_id=config['service_principal_id'],
+                                          service_principal_password=config['service_principal_password'])
+    
+    ws = use_or_create_workspace(workspace_name=env.workspace,
+                                 resource_group=env.resource_group,
+                                 subscription_id=env.subscription_id,
+                                 auth=auth) 
         
     datastore = ws.datastores[env.datastore_name]  
     train_corpus = Dataset.Tabular.from_delimited_files(path=(datastore,env.train_corpus)).to_pandas_dataframe()
@@ -65,14 +74,16 @@ def main():
         output = np.vstack([targets,preds]).transpose()
         output = pd.DataFrame(output,columns=['label','text'])
         output.to_csv('score.csv',index=False)
+        
+        metrics = {'score_avg_loss':avg_loss,
+                   'score_avg_acc':avg_acc}
+        with open('scoring_metrics.txt','a') as f:
+            for key,value in metrics.items():
+                f.write(f'{key}: {str(value)}\n')
+        
         datastore.upload_files(files=['score.csv'],
                                target_path='score',
                                overwrite=True)
-        metrics = {'score_avg_loss':avg_loss,
-                   'score_avg_acc':avg_acc}
-        for key,value in metrics.items():
-            run.log(key,value)
-            run.parent.log(key,value)
         print('successfully saved score result')
     except Exception as error:
         print(error)
@@ -81,6 +92,3 @@ if __name__ == '__main__':
     main()
 
 #%%
-
-
-    

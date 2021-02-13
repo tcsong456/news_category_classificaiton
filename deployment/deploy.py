@@ -1,18 +1,28 @@
 import sys
 sys.path.append('azure')
+import json
 from env_variables import ENV
-from azure_utils import get_model,use_or_create_environment
+from azure_utils import get_model,use_or_create_environment,use_or_create_workspace
 from azureml.core.webservice import AksWebservice
 from azureml.core.compute import AksCompute,ComputeTarget
 from azureml.core.model import InferenceConfig,Model
-from azureml.core.run import Run
+from azureml.core.authentication import ServicePrincipalAuthentication
 from azureml.exceptions import ComputeTargetException
 
 def main():
     env = ENV()
-    run = Run.get_context()
-    ws = run.experiment.workspace
-
+    
+    with open('config.json','r') as f:
+        config = json.load(f)        
+    auth = ServicePrincipalAuthentication(tenant_id=config['tenant_id'],
+                                          service_principal_id=config['service_principal_id'],
+                                          service_principal_password=config['service_principal_password'])
+    
+    ws = use_or_create_workspace(workspace_name=env.workspace,
+                                 resource_group=env.resource_group,
+                                 subscription_id=env.subscription_id,
+                                 auth=auth) 
+    
     model = get_model(ws=ws,
                       model_name=env.model_name,
                       model_version=env.model_version)
