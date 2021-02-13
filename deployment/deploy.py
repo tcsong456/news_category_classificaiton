@@ -35,7 +35,8 @@ def main():
                                  name=env.aks_service_name)
     except ComputeTargetException:
         aks_compute_config = AksCompute.provisioning_configuration(
-                                                                    vm_size=env.scoring_vm_size
+                                                                    vm_size=env.scoring_vm_size,
+                                                                    agent_count=1
                                                                     )
         aks_compute = ComputeTarget.create(workspace=ws,
                                            name=env.aks_service_name,
