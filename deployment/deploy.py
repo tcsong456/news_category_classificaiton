@@ -73,23 +73,3 @@ if __name__ == '__main__':
     main()
     
 #%%
-#from azureml.core import Workspace,Environment
-#from azureml.core.webservice import AksWebservice
-#from azureml.core.compute import AksCompute
-#from azureml.exceptions import ComputeTargetException
-#ws = Workspace.get(name='aml-workspace',
-#                   resource_group='aml-resource-group',
-#                   subscription_id='64c727c2-4f98-4ef1-a45f-09eb33c1bd59')
-#try:
-#    aks_compute = AksCompute(workspace=ws,
-#                             name='news-aks-service')
-#except ComputeTargetException:
-#    print('wrong!')
-##
-#%%
-#service = AksWebservice(workspace=ws,
-#                        name='news-aks-service')
-#service.get_logs()
-#env = Environment.list(ws)
-#env['news_clf_dependencies']
-#aks_compute

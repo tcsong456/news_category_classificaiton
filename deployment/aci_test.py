@@ -84,7 +84,7 @@ def main():
             for key,value in metrics.items():
                 f.write(f'{key}: {str(value)}\n')
         
-        datastore.upload_files(files=['score.csv'],
+        datastore.upload_files(files=['score.csv','scoring_metrics.txt'],
                                target_path='score',
                                overwrite=True)
         print('successfully saved score result')
@@ -93,17 +93,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-#%%
-#def produce():
-#    with open('corpus/corpus_train.txt','r') as f:
-#        for line in f:
-#            words = line.split()
-#            i = 0
-#            while i < len(words):
-#                yield words[i:i+5]
-#                i += 5
-#for i,w in enumerate(produce()):
-#    print(i,w)
-
-#%%
