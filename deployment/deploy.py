@@ -10,6 +10,9 @@ from azureml.core.authentication import ServicePrincipalAuthentication
 from azureml.exceptions import ComputeTargetException
 
 def main():
+    import torch
+    print(F'DEPLOY CUDA:{torch.cuda.is_available()}')
+    
     env = ENV()
     
     with open('config.json','r') as f:
@@ -43,8 +46,8 @@ def main():
     
     if create_new_akscompute:
         aks_compute_config = AksCompute.provisioning_configuration(
-                                                                    vm_size=env.scoring_vm_size,
-                                                                    agent_count=1,
+#                                                                    vm_size=env.gpu_vm_size_scoring,
+#                                                                    agent_count=1,
                                                                     cluster_purpose='DevTest'
                                                                     )
         aks_compute = ComputeTarget.create(workspace=ws,
@@ -77,11 +80,11 @@ if __name__ == '__main__':
 #ws = Workspace.get(name='aml-workspace',
 #                   resource_group='aml-resource-group',
 #                   subscription_id='64c727c2-4f98-4ef1-a45f-09eb33c1bd59')
-#try:
-#    aks_compute = AksCompute(workspace=ws,
-#                             name='news-aks-service')
-#except ComputeTargetException:
-#    print('wrong!')
+try:
+    aks_compute = AksCompute(workspace=ws,
+                             name='news-aks-service')
+except ComputeTargetException:
+    print('wrong!')
 ##
 #%%
 #service = AksWebservice(workspace=ws,
@@ -89,3 +92,4 @@ if __name__ == '__main__':
 #service.get_logs()
 #env = Environment.list(ws)
 #env['news_clf_dependencies']
+aks_compute

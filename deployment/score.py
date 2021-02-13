@@ -5,6 +5,8 @@ import os
 import torch
 import json
 
+print(f'SCORE CUDA:{torch.cuda.is_available()}')
+
 def init():
     global model
     model_path = os.environ.get('AZUREML_MODEL_DIR')

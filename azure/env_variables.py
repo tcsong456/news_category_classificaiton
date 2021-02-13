@@ -50,6 +50,5 @@ class ENV:
     epochs: Optional[int] = int(os.environ.get('EPOCHS'))
     corpus_frac: Optional[float] = float(os.environ.get('CORPUS_FRAC'))
     aks_service_name: Optional[str] = os.environ.get('AKS_SERVICE_NAME')
-    scoring_vm_size: Optional[str] = os.environ.get('SCORING_VM_SIZE')
     
 #%%
