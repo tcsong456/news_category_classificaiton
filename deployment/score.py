@@ -12,7 +12,7 @@ def init():
     model = torch.load(model_path)
 
 def run(data):
-    raw_data = json.loads(data['data'])
+    raw_data = json.loads(data)['data']
     raw_data = torch.tensor(raw_data,dtype=torch.long)
     preds = []
     batch_size = 128
