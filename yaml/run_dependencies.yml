@@ -1,7 +1,6 @@
 name: 'news_clf_dependencies'
 dependencies:
   - python=3.7.*
-  - cudatoolkit=10.0
   - pip
   
   - pip:
@@ -13,3 +12,4 @@ dependencies:
     - tqdm
     - torch
     - nltk
+    - cudatoolkit=10.0
