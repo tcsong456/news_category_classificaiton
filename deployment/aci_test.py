@@ -1,5 +1,6 @@
 import sys
 sys.path.append('azure')
+sys.path.append('py')
 import json
 import pickle
 import pandas as pd
@@ -7,8 +8,8 @@ import numpy as np
 from azureml.core.webservice import AciWebservice
 from azureml.core.authentication import ServicePrincipalAuthentication
 from azureml.core import Dataset
-from py.create_corpus import Corpus
-from py.tokenee import Tokenizer
+from create_corpus import Corpus
+from tokenee import Tokenizer
 from torch.utils.data import DataLoader
 from env_variables import ENV
 from azure_utils import use_or_create_workspace
