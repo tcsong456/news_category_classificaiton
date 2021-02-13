@@ -95,6 +95,14 @@ if __name__ == '__main__':
     main()
 
 #%%
-#a = np.random.rand(10).tolist()
-#b = np.random.rand(20).tolist()
-#np.concatenate([a,b]).shape
+#def produce():
+#    with open('corpus/corpus_train.txt','r') as f:
+#        line = f.readline()
+#        words = line.split()
+#        i = 0
+#        while i < len(words):
+#            yield words[i:i+5]
+#            i += 5
+#for w in produce():
+#    print(w)
+#        
