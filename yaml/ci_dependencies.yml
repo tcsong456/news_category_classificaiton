@@ -12,3 +12,4 @@ dependencies:
     - pandas
     - nltk
     - fasttext
+    - torch
