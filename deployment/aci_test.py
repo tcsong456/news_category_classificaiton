@@ -14,6 +14,7 @@ from torch.utils.data import DataLoader
 from env_variables import ENV
 from azure_utils import use_or_create_workspace
 from torch import nn
+import torch
 import nltk
 nltk.download('punkt')
 from nltk.tokenize import word_tokenize
@@ -69,13 +70,12 @@ def main():
     try:
         loss_fn = nn.NLLLoss()
         preds = aks_service.run(json_data)
-        preds = np.concatenate(preds)
-        print(f'aci_test preds:{preds}')
-        losses = loss_fn(preds,targets)
-        accs = (preds == targets).sum()
-        avg_loss,avg_acc = round(losses/len(preds),5),round(accs/len(preds),3)
-        output = np.vstack([targets,preds]).transpose()
-        output = pd.DataFrame(output,columns=['label','text'])
+        losses = loss_fn(torch.tensor(preds,dtype=torch.float64),torch.from_numpy(targets))
+        index = np.array(preds).argmax(axis=1)
+        accs = (index == targets).sum()
+        avg_loss,avg_acc = round(losses.item()/len(preds),5),round(accs/len(preds),3)
+        output = np.vstack([targets,index]).transpose()
+        output = pd.DataFrame(output,columns=['label','pred'])
         output.to_csv('score.csv',index=False)
         
         metrics = {'score_avg_loss':avg_loss,
@@ -103,6 +103,7 @@ if __name__ == '__main__':
 #        while i < len(words):
 #            yield words[i:i+5]
 #            i += 5
-#for w in produce():
-#    print(w)
-#        
+#for i,w in enumerate(produce()):
+#    print(i,w)
+
+#%%
