@@ -69,6 +69,7 @@ def main():
     try:
         loss_fn = nn.NLLLoss()
         preds = aks_service.run(json_data)
+        preds = np.concatenate(preds)
         losses = loss_fn(preds,targets)
         accs = (preds == targets).sum()
         avg_loss,avg_acc = round(losses/len(preds),5),round(accs/len(preds),3)
@@ -93,10 +94,6 @@ if __name__ == '__main__':
     main()
 
 #%%
-#f = open('corpus/corpus_train.txt','r')
-#from itertools import islice
-#i =0 
-#for line in islice(f,100):
-#    print(line)
-#    i += 1
-#print(i)
+#a = np.random.rand(10).tolist()
+#b = np.random.rand(20).tolist()
+#np.concatenate([a,b]).shape

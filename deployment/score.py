@@ -19,7 +19,6 @@ def run(data):
     n_rounds = np.ceil(len(raw_data) / batch_size).astype(int)
     print('START ITERATING')
     for i in range(n_rounds):
-        print(i)
         if i < n_rounds - 1:
             data = raw_data[i*batch_size:(i+1)*batch_size]
         else:
@@ -27,8 +26,6 @@ def run(data):
         data = data.cuda() if torch.cuda.is_available() else data
         pred = model(data)
         pred = pred.cpu().data.numpy()
-        preds.append(np.argmax(pred,axis=1))
-    preds = np.concatenate(preds)
-    print(preds)
+        preds.append(np.argmax(pred,axis=1).tolist())
     
     return preds
