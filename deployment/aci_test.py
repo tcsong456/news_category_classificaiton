@@ -63,12 +63,12 @@ def main():
     json_data = json.dumps({'data':df})
     json_data = bytes(json_data,encoding='utf-8')
     
-    aci_service = AciWebservice(workspace=ws,
-                                name=env.service_name)
+    aks_service = AciWebservice(workspace=ws,
+                                name=env.aks_service_name)
     
     try:
         loss_fn = nn.NLLLoss()
-        preds = aci_service.run(json_data)
+        preds = aks_service.run(json_data)
         losses = loss_fn(preds,targets)
         accs = (preds == targets).sum()
         avg_loss,avg_acc = round(losses/len(preds),5),round(accs/len(preds),3)
