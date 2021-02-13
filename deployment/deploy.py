@@ -38,7 +38,7 @@ def main():
                                                                     vm_size=env.scoring_vm_size
                                                                     )
         aks_compute = ComputeTarget.create(workspace=ws,
-                                           name=env.AKS_SERVICE_NAME,
+                                           name=env.aks_service_name,
                                            provisioning_configuration=aks_compute_config)
         aks_compute.wait_for_completion(show_output=True)
         
@@ -47,7 +47,7 @@ def main():
                                        source_directory='.')
     aks_config = AksWebservice.deploy_configuration()
     aks_service = Model.deploy(workspace=ws,
-                               name=env.AKS_SERVICE_NAME,
+                               name=env.aks_service_name,
                                models=[model],
                                inference_config=inference_config,
                                deployment_config=aks_config,
